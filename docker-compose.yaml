@@ -1,0 +1,18 @@
+version: '3.7'
+
+services:
+  frontend:
+    container_name: epic-front-react
+    build: ./
+    volumes:
+      - './:/app'
+      - '/app/node_modules'
+    expose:
+      - '80'
+    ports:
+      - 80:80
+    stdin_open: true
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - PORT=80
+    command: yarn start
