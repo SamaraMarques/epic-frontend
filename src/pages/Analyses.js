@@ -19,7 +19,7 @@ const mock = [
     answer: '[2, 3, 1, 7]',
   },
 ];
-const Analysis = () => {
+const Analyses = () => {
   return (
     <div>
       <div className="m-4">
@@ -43,4 +43,4 @@ const Analysis = () => {
   );
 };
 
-export default Analysis;
+export default Analyses;

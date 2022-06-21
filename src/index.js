@@ -10,7 +10,11 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Enterprises from './pages/Enterprises';
 import Enterprise from './pages/Enterprise';
-import Analysis from './pages/Analysis';
+import Analyses from './pages/Analyses';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 
 const roomElement = document.getElementById('root');
 render(
@@ -20,8 +24,14 @@ render(
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/enterprises" element={<Enterprises />} />
-      <Route path="/enterprise/:enterprise_id" element={<Enterprise />} />
-      <Route path="/analysis" element={<Analysis />} />
+      <Route
+        path="/enterprise/:enterprise_id/sectors"
+        element={<Enterprise />}
+      />
+      <Route
+        path="/enterprise/:enterprise_id/analyses"
+        element={<Analyses />}
+      />
     </Routes>
   </BrowserRouter>,
   roomElement,

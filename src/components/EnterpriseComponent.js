@@ -1,30 +1,41 @@
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+
 import React from 'react';
+import { styled } from '@mui/material/styles';
+
+const Div = styled('div')(({ theme }) => ({
+  ...theme.typography.button,
+  backgroundColor: theme.palette.background.paper,
+  padding: theme.spacing(1),
+}));
 
 const EnterpriseComponent = ({ name, id }) => {
   return (
-    <div className="col-3 border border-dark border-1 m-2">
-      <div className="d-flex flex-row p-2">
-        <div className="col-8">
-          <p className="h4 m-2">{name}</p>
-        </div>
-        <div>
-          <button type="button" className="btn btn-warning m-1">
-            <i className="bi bi-pencil"></i>
-          </button>
-          <button type="button" className="btn btn-danger m-1">
-            <i className="bi bi-trash"></i>
-          </button>
-        </div>
-      </div>
-      <div>
-        <button type="button" className="btn btn-secondary m-2">
-          Setores
-        </button>
-        <button type="button" className="btn btn-secondary m-2">
-          Análises
-        </button>
-      </div>
-    </div>
+    <Box>
+      <Stack spacing={2} direction="column">
+        <Stack spacing={2} direction="row">
+          <Div>{name}</Div>
+          <Button variant="contained">
+            <EditIcon />
+          </Button>
+          <Button variant="contained">
+            <DeleteIcon />
+          </Button>
+        </Stack>
+        <Stack spacing={2} direction="row">
+          <Button variant="contained" href={`/enterprise/${id}/sectors`}>
+            Setores
+          </Button>
+          <Button variant="contained" href={`/enterprise/${id}/analyses`}>
+            Análises
+          </Button>
+        </Stack>
+      </Stack>
+    </Box>
   );
 };
 

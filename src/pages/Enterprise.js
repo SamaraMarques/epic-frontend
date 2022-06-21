@@ -1,25 +1,30 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import * as axios from 'axios';
 import SectorComponent from '../components/SectorComponent';
 
-const mock = [
-  {
-    name: 'Setor 1',
-  },
-  {
-    name: 'Setor 2',
-  },
-  {
-    name: 'Setor 3',
-  },
-  {
-    name: 'Setor 4',
-  },
-];
 const Enterprise = () => {
   const { enterprise_id } = useParams();
 
-  console.log(process.env);
+  const [sectors, setSectors] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+
+    const api = axios.create({
+      baseURL: process.env.REACT_APP_API_URL,
+      withCredentials: true,
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    api
+      .get(`/enterprise/${enterprise_id}/sectors`)
+      .then((response) => setSectors(response.data))
+      .catch((err) => {
+        console.log(err);
+        navigate('/enterprises');
+      });
+  });
   return (
     <div>
       <div className="m-4">
@@ -31,7 +36,7 @@ const Enterprise = () => {
         </button>
       </div>
       <div className="row m-3">
-        {mock.map((enterprise, index) => {
+        {sectors.map((enterprise, index) => {
           return (
             <SectorComponent key={index} name={enterprise?.name} id={index} />
           );
