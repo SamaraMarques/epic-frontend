@@ -35,7 +35,7 @@ function SignUp() {
   const handleSubmit = (event) => {
     setSent(true);
     console.log(event);
-    const api = axios.create({ baseURL: process.env.REACT_APP_API_URL });
+    const api = axios.create({ baseURL: process.env.REACT_APP_API_URL, headers: { Accept: 'application/json' } });
     api
       .post('/register', event)
       .then((response) => console.log(response.data))

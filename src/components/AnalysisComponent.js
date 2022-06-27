@@ -1,22 +1,30 @@
+import { Box, Button, Stack } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import ArticleIcon from '@mui/icons-material/Article';
 import React from 'react';
 
-const AnalysisComponent = ({ name, answer, id }) => {
+const Div = styled('div')(({ theme }) => ({
+  ...theme.typography.button,
+  backgroundColor: theme.palette.background.paper,
+  padding: theme.spacing(1),
+}));
+
+const AnalysisComponent = ({ id, enterprise_id, created_at }) => {
+  const formattedDate = new Date(created_at).toLocaleDateString('pt-BR');
   return (
-    <div className="col-3 border border-dark border-1 m-2">
-      <div className="d-flex flex-row p-2">
-        <div className="col-8">
-          <p className="h4 m-2">{name}</p>
-        </div>
-        <div>
-          <button type="button" className="btn btn-warning m-1">
-            <i className="bi bi-pencil"></i>
-          </button>
-          <button type="button" className="btn btn-danger m-1">
-            <i className="bi bi-trash"></i>
-          </button>
-        </div>
-      </div>
-    </div>
+    <Box m={2}>
+      <Stack spacing={3} direction="row">
+        <Stack direction="column">
+          <Div>{`Análise #${id}`}</Div>
+          <Div>{`Data: ${formattedDate}`}</Div>
+        </Stack>
+        <Stack>
+          <Button variant="contained">
+            <ArticleIcon />
+          </Button>
+        </Stack>
+      </Stack>
+    </Box>
   );
 };
 

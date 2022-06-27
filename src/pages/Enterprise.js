@@ -2,47 +2,56 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import * as axios from 'axios';
 import SectorComponent from '../components/SectorComponent';
+import { Box, Button, Stack } from '@mui/material';
 
 const Enterprise = () => {
   const { enterprise_id } = useParams();
-
   const [sectors, setSectors] = useState([]);
+  const [token, setToken] = useState('');
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
+  if (!token) {
+    setToken(localStorage.getItem('token'));
+  }
 
+  useEffect(() => {
     const api = axios.create({
       baseURL: process.env.REACT_APP_API_URL,
       withCredentials: true,
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' },
     });
     api
-      .get(`/enterprise/${enterprise_id}/sectors`)
+      .get(`/enterprises/${enterprise_id}/sectors`)
       .then((response) => setSectors(response.data))
       .catch((err) => {
         console.log(err);
         navigate('/enterprises');
       });
-  });
+  }, [token, navigate, enterprise_id]);
   return (
-    <div>
-      <div className="m-4">
-        <button type="button" className="btn btn-info mx-2">
+    <Box>
+      <Stack m={2} spacing={2} direction="row">
+        <Button
+          variant="contained"
+          href={`/enterprise/${enterprise_id}/sectors/create`}
+        >
           Adicionar Setor
-        </button>
-        <button type="button" className="btn btn-info mx-2">
-          Exibir análises
-        </button>
-      </div>
-      <div className="row m-3">
+        </Button>
+        <Button
+          variant="contained"
+          href={`/enterprise/${enterprise_id}/analyses`}
+        >
+          Análises
+        </Button>
+      </Stack>
+      <Stack m={3} spacing={3} direction="column">
         {sectors.map((enterprise, index) => {
           return (
             <SectorComponent key={index} name={enterprise?.name} id={index} />
           );
         })}
-      </div>
-    </div>
+      </Stack>
+    </Box>
   );
 };
 

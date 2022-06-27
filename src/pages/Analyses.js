@@ -1,45 +1,53 @@
-import React from 'react';
+import { Box, Button, Stack } from '@mui/material';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import AnalysisComponent from '../components/AnalysisComponent';
 
-const mock = [
-  {
-    name: 'Análise 1',
-    answer: '[1,3, 4, 3, 1]',
-  },
-  {
-    name: 'Análise 2',
-    answer: '[2, 3, 1, 7]',
-  },
-  {
-    name: 'Análise 3',
-    answer: '[2, 3, 1, 7]',
-  },
-  {
-    name: 'Análise 4',
-    answer: '[2, 3, 1, 7]',
-  },
-];
 const Analyses = () => {
+  const { enterprise_id } = useParams();
+
+  const [analyses, setAnalyses] = useState([]);
+  const [token, setToken] = useState('');
+  const navigate = useNavigate();
+
+  if (!token) {
+    setToken(localStorage.getItem('token'));
+  }
+
+  useEffect(() => {
+    const api = axios.create({
+      baseURL: process.env.REACT_APP_API_URL,
+      withCredentials: true,
+      headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' },
+    });
+    api
+      .get(`/enterprises/${enterprise_id}/analyses`)
+      .then((response) => setAnalyses(response.data))
+      .catch((err) => {
+        console.log(err);
+        navigate(`/enterprises/${enterprise_id}`);
+      });
+  }, [token, navigate, enterprise_id]);
+
   return (
-    <div>
-      <div className="m-4">
-        <button type="button" className="btn btn-info">
-          Realizar uma análise
-        </button>
-      </div>
-      <div className="row m-3">
-        {mock.map((analize, index) => {
+    <Box>
+      <Box m={4}>
+        <Button variant="contained">Nova análise</Button>
+      </Box>
+      <Stack m={3} direction="column">
+        {analyses.map((analize, index) => {
           return (
             <AnalysisComponent
               key={index}
-              name={analize?.name}
-              answer={analize?.answer}
-              id={index}
+              id={analize?.id}
+              enterprise_id={analize?.enterprise_id}
+              created_at={analize?.created_at}
             />
           );
         })}
-      </div>
-    </div>
+      </Stack>
+    </Box>
   );
 };
 

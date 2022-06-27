@@ -1,12 +1,9 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { Field, Form, FormSpy } from 'react-final-form';
 import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
 import Typography from '../modules/components/Typography';
-import AppFooter from '../modules/views/AppFooter';
-import AppAppBar from '../modules/views/AppAppBar';
 import AppForm from '../modules/views/AppForm';
-import { email, required } from '../modules/form/validation';
+import { required } from '../modules/form/validation';
 import RFTextField from '../modules/form/RFTextField';
 import FormButton from '../modules/form/FormButton';
 import FormFeedback from '../modules/form/FormFeedback';
@@ -14,59 +11,46 @@ import withRoot from '../modules/withRoot';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-function SignIn() {
-  const [sent, setSent] = React.useState(false);
+function CreateEnterprise() {
+  const [sent, setSent] = useState(false);
+  const [token, setToken] = useState('');
   const navigate = useNavigate();
 
   const validate = (values) => {
-    const errors = required(['email', 'password'], values);
-
-    if (!errors.email) {
-      const emailError = email(values.email);
-      if (emailError) {
-        errors.email = emailError;
-      }
-    }
+    const errors = required(['name'], values);
 
     return errors;
   };
+
+  if (!token) {
+    setToken(localStorage.getItem('token'));
+  }
 
   const handleSubmit = (event) => {
     setSent(true);
 
     const api = axios.create({
       baseURL: process.env.REACT_APP_API_URL,
-      headers: { Accept: 'application/json' }
+      withCredentials: true,
+      headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' },
     });
     api
-      .post('/login', event)
+      .post('/enterprises', event)
       .then((response) => {
-        localStorage.setItem('token', response.data.token || undefined);
         navigate('/enterprises');
       })
       .catch((err) => {
         console.error('Erro ' + err);
-        navigate('/login');
+        navigate('/enterprises');
       });
   };
 
   return (
     <React.Fragment>
-      <AppAppBar />
       <AppForm>
         <React.Fragment>
           <Typography variant="h3" gutterBottom marked="center" align="center">
-            Entrar
-          </Typography>
-          <Typography variant="body2" align="center">
-            {'Não é registrado ainda? '}
-            <Link
-              href="/premium-themes/onepirate/sign-up/"
-              align="center"
-              underline="always"
-            >
-              Registre-se aqui
-            </Link>
+            Criar empresa
           </Typography>
         </React.Fragment>
         <Form
@@ -82,29 +66,18 @@ function SignIn() {
               sx={{ mt: 6 }}
             >
               <Field
-                autoComplete="email"
+                autoComplete="name"
                 autoFocus
                 component={RFTextField}
                 disabled={submitting || sent}
                 fullWidth
-                label="Email"
+                label="Nome"
                 margin="normal"
-                name="email"
+                name="name"
                 required
                 size="large"
               />
-              <Field
-                fullWidth
-                size="large"
-                component={RFTextField}
-                disabled={submitting || sent}
-                required
-                name="password"
-                autoComplete="current-password"
-                label="Senha"
-                type="password"
-                margin="normal"
-              />
+
               <FormSpy subscription={{ submitError: true }}>
                 {({ submitError }) =>
                   submitError ? (
@@ -122,23 +95,14 @@ function SignIn() {
                 color="secondary"
                 fullWidth
               >
-                {submitting || sent ? 'Carregando…' : 'Entrar'}
+                {submitting || sent ? 'Carregando…' : 'Confirmar'}
               </FormButton>
             </Box>
           )}
         </Form>
-        <Typography align="center">
-          <Link
-            underline="always"
-            href="/premium-themes/onepirate/forgot-password/"
-          >
-            Esqueceu sua senha?
-          </Link>
-        </Typography>
       </AppForm>
-      <AppFooter />
     </React.Fragment>
   );
 }
 
-export default withRoot(SignIn);
+export default withRoot(CreateEnterprise);

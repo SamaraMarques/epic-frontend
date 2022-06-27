@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -9,15 +9,18 @@ import EnterpriseComponent from '../components/EnterpriseComponent';
 
 const Enterprises = () => {
   const [enterprises, setEnterprises] = useState([]);
+  const [token, setToken] = useState('');
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
+  if (!token) {
+    setToken(localStorage.getItem('token'));
+  }
 
+  useEffect(() => {
     const api = axios.create({
       baseURL: process.env.REACT_APP_API_URL,
       withCredentials: true,
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' },
     });
     api
       .get('/enterprises')
@@ -26,11 +29,12 @@ const Enterprises = () => {
         console.log(err);
         navigate('/');
       });
-  });
+  }, [token, navigate]);
+
   return (
     <Box>
       <Box m={2}>
-        <Button variant="contained">Criar Empresa</Button>
+        <Button variant="contained" href="/enterprise/create">Criar Empresa</Button>
       </Box>
       <Stack m={5} spacing={5} direction="column">
         {enterprises.map((enterprise, index) => {

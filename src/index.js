@@ -15,6 +15,8 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+import CreateEnterprise from './pages/CreateEnterprise';
+import CreateSector from './pages/CreateSector';
 
 const roomElement = document.getElementById('root');
 render(
@@ -24,6 +26,11 @@ render(
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/enterprises" element={<Enterprises />} />
+      <Route path="/enterprise/create" element={<CreateEnterprise />} />
+      <Route
+        path="/enterprise/:enterprise_id/sectors/create"
+        element={<CreateSector />}
+      />
       <Route
         path="/enterprise/:enterprise_id/sectors"
         element={<Enterprise />}
