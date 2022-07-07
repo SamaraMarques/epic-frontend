@@ -4,7 +4,6 @@ import Box from '@mui/material/Box';
 import EditIcon from '@mui/icons-material/Edit';
 import React from 'react';
 import { styled } from '@mui/material/styles';
-import { useNavigate } from 'react-router-dom';
 
 const Div = styled('div')(({ theme }) => ({
   ...theme.typography.button,
@@ -13,8 +12,6 @@ const Div = styled('div')(({ theme }) => ({
 }));
 
 const EnterpriseComponent = ({ name, id }) => {
-  const navigate = useNavigate();
-
   return (
     <Box>
       <Stack spacing={2} direction="column">

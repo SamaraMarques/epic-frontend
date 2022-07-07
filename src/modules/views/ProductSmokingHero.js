@@ -8,7 +8,12 @@ function ProductSmokingHero() {
   return (
     <Container
       component="section"
-      sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', my: 9 }}
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        my: 9,
+      }}
     >
       <Button
         sx={{
@@ -19,7 +24,7 @@ function ProductSmokingHero() {
           px: 5,
         }}
       >
-        <Typography variant="h4" component="span">
+        <Typography variant="h5" component="span">
           Got any questions? Need help?
         </Typography>
       </Button>

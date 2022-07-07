@@ -3,11 +3,11 @@ import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import AppBar from '../components/AppBar';
 import Toolbar from '../components/Toolbar';
+import { Button } from '@mui/material';
 
 const rightLink = {
   fontSize: 16,
   color: 'common.white',
-  ml: 3,
 };
 
 function AppAppBar() {
@@ -25,24 +25,39 @@ function AppAppBar() {
           >
             {'EPIC'}
           </Link>
-          <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
+          <Box
+            sx={{
+              flex: 1,
+              display: 'flex',
+              justifyContent: 'flex-end',
+              alignItems: 'center',
+            }}
+          >
             <Link
               color="inherit"
               variant="h6"
               underline="none"
-              href="/login"
+              href="/"
               sx={rightLink}
             >
-              {'Entrar'}
+              {'Contato'}
             </Link>
-            <Link
-              variant="h6"
-              underline="none"
-              href="/register"
-              sx={{ ...rightLink, color: 'secondary.main' }}
+            <Button
+              variant="contained"
+              sx={{ ...rightLink, color: 'secondary.main', ml: 3 }}
+              href="/login"
+              disableElevation
             >
-              {'Registrar'}
-            </Link>
+              Entrar
+            </Button>
+            <Button
+              variant="outlined"
+              sx={{ ...rightLink, ml: 2 }}
+              color="secondary"
+              href="/register"
+            >
+              Registrar
+            </Button>
           </Box>
         </Toolbar>
       </AppBar>

@@ -1,8 +1,6 @@
 import React from 'react';
 import './index.css';
 import App from './App';
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap-icons/font/bootstrap-icons.css';
 import { render } from 'react-dom';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
@@ -17,6 +15,9 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import CreateEnterprise from './pages/CreateEnterprise';
 import CreateSector from './pages/CreateSector';
+import AnalysisResult from './pages/AnalysisResult';
+import EnterpriseQuestions from './pages/EnterpriseQuestions';
+import SectorQuestions from './pages/SectorQuestions';
 
 const roomElement = document.getElementById('root');
 render(
@@ -38,6 +39,18 @@ render(
       <Route
         path="/enterprise/:enterprise_id/analyses"
         element={<Analyses />}
+      />
+      <Route
+        path="/analyses/:analysis_id/enterprise/:enterprise_id"
+        element={<EnterpriseQuestions />}
+      />
+      <Route
+        path="/analyses/:analysis_id/sector/:sector_id"
+        element={<SectorQuestions />}
+      />
+      <Route
+        path="/analyses/:analysis_id/result"
+        element={<AnalysisResult />}
       />
     </Routes>
   </BrowserRouter>,

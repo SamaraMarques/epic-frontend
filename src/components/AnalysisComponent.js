@@ -19,7 +19,7 @@ const AnalysisComponent = ({ id, enterprise_id, created_at }) => {
           <Div>{`Data: ${formattedDate}`}</Div>
         </Stack>
         <Stack>
-          <Button variant="contained">
+          <Button variant="contained" href={`/analyses/${id}/result`}>
             <ArticleIcon />
           </Button>
         </Stack>

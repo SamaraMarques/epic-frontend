@@ -26,12 +26,12 @@ function ProductValues() {
           alt="curvy lines"
           sx={{ pointerEvents: 'none', position: 'absolute', top: -180 }}
         />
-        <Grid container spacing={5}>
-          <Grid item xs={12} md={4}>
+        <Grid container justifyContent={'center'} spacing={5}>
+          <Grid item xs={12}>
             <Box sx={item}>
               <SecurityIcon fontSize="large" />
               <Typography variant="h6" sx={{ my: 5 }}>
-                The best luxury hotels
+                Sobre o projeto
               </Typography>
               <Typography variant="h5">
                 {
@@ -41,43 +41,6 @@ function ProductValues() {
                 {
                   ', go for a mini-vacation just a few subway stops away from your home.'
                 }
-              </Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Box sx={item}>
-              <Box
-                component="img"
-                src="/static/themes/onepirate/productValues2.svg"
-                alt="graph"
-                sx={{ height: 55 }}
-              />
-              <Typography variant="h6" sx={{ my: 5 }}>
-                New experiences
-              </Typography>
-              <Typography variant="h5">
-                {
-                  'Privatize a pool, take a Japanese bath or wake up in 900m2 of garden… '
-                }
-
-                {'your Sundays will not be alike.'}
-              </Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Box sx={item}>
-              <Box
-                component="img"
-                src="/static/themes/onepirate/productValues3.svg"
-                alt="clock"
-                sx={{ height: 55 }}
-              />
-              <Typography variant="h6" sx={{ my: 5 }}>
-                Exclusive rates
-              </Typography>
-              <Typography variant="h5">
-                {'By registering, you will access specially negotiated rates '}
-                {'that you will not find anywhere else.'}
               </Typography>
             </Box>
           </Grid>
