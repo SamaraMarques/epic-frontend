@@ -1,8 +1,6 @@
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
 import React from 'react';
 import { styled } from '@mui/material/styles';
-import { Grid } from '@mui/material';
+import { Grid, Box, Button } from '@mui/material';
 
 const Div = styled('div')(({ theme }) => ({
   ...theme.typography.button,

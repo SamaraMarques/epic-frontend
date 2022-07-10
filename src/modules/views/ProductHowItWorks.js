@@ -1,8 +1,6 @@
 import * as React from 'react';
 
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Container from '@mui/material/Container';
+import { Box, Grid, Container } from '@mui/material';
 import Button from '../components/Button';
 import Typography from '../components/Typography';
 
@@ -81,8 +79,8 @@ function ProductHowItWorks() {
                   sx={image}
                 />
                 <Typography variant="h5" align="center">
-                  First come, first served. Our offers are in limited quantities, so
-                  be quick.
+                  First come, first served. Our offers are in limited
+                  quantities, so be quick.
                 </Typography>
               </Box>
             </Grid>

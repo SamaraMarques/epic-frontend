@@ -1,7 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { experimentalStyled as styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
+import { Box } from '@mui/material';
 import Typography from '../components/Typography';
 
 const BoxStyled = styled(Box, {
@@ -22,7 +22,12 @@ function FormFeedback(props) {
   const { className, children, error, success, ...others } = props;
 
   return (
-    <BoxStyled error={error} success={success} className={className} {...others}>
+    <BoxStyled
+      error={error}
+      success={success}
+      className={className}
+      {...others}
+    >
       <Typography color="inherit">{children}</Typography>
     </BoxStyled>
   );

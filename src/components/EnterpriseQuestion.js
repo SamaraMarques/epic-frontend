@@ -1,6 +1,5 @@
-import Box from '@mui/material/Box';
 import React from 'react';
-import { FormLabel, Stack } from '@mui/material';
+import { FormLabel, Stack, Box } from '@mui/material';
 import { Field } from 'react-final-form';
 
 const EnterpriseQuestion = ({ question, id }) => {

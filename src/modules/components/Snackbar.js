@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import MuiSnackbar from '@mui/material/Snackbar';
 import { snackbarContentClasses } from '@mui/material/SnackbarContent';
-import Slide from '@mui/material/Slide';
+import { Slide, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import InfoIcon from '@mui/icons-material/Info';
-import IconButton from '@mui/material/IconButton';
 
 const styles = ({ theme }) => ({
   [`& .${snackbarContentClasses.root}`]: {

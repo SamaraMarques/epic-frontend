@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Form, FormSpy } from 'react-final-form';
-import Box from '@mui/material/Box';
+import { Box } from '@mui/material';
 import AppForm from '../modules/views/AppForm';
 import FormButton from '../modules/form/FormButton';
 import FormFeedback from '../modules/form/FormFeedback';

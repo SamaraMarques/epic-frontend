@@ -1,7 +1,5 @@
 import * as React from 'react';
-import Grid from '@mui/material/Grid';
-import Link from '@mui/material/Link';
-import Container from '@mui/material/Container';
+import { Grid, Link, Container } from '@mui/material';
 import Typography from '../components/Typography';
 
 function Copyright() {

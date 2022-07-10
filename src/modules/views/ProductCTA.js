@@ -1,7 +1,5 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Container from '@mui/material/Container';
+import { Box, Grid, Container } from '@mui/material';
 import Typography from '../components/Typography';
 import TextField from '../components/TextField';
 import Snackbar from '../components/Snackbar';
@@ -32,7 +30,11 @@ function ProductCTA() {
               px: 3,
             }}
           >
-            <Box component="form" onSubmit={handleSubmit} sx={{ maxWidth: 400 }}>
+            <Box
+              component="form"
+              onSubmit={handleSubmit}
+              sx={{ maxWidth: 400 }}
+            >
               <Typography variant="h2" component="h2" gutterBottom>
                 Receive offers
               </Typography>
@@ -70,7 +72,8 @@ function ProductCTA() {
               right: 0,
               bottom: 0,
               width: '100%',
-              background: 'url(/static/themes/onepirate/productCTAImageDots.png)',
+              background:
+                'url(/static/themes/onepirate/productCTAImageDots.png)',
             }}
           />
           <Box

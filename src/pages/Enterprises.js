@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
+import { Box, Button, Stack } from '@mui/material';
 import axios from 'axios';
 
 import EnterpriseComponent from '../components/EnterpriseComponent';

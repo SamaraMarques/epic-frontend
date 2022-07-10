@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Field, Form, FormSpy } from 'react-final-form';
-import Box from '@mui/material/Box';
+import { Box } from '@mui/material';
 import Typography from '../modules/components/Typography';
 import AppForm from '../modules/views/AppForm';
 import { required } from '../modules/form/validation';

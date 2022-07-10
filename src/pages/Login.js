@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Field, Form, FormSpy } from 'react-final-form';
-import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
+import { Box, Link } from '@mui/material';
 import Typography from '../modules/components/Typography';
 import AppFooter from '../modules/views/AppFooter';
 import AppAppBar from '../modules/views/AppAppBar';
