@@ -52,6 +52,7 @@ function SignIn() {
       })
       .catch((err) => {
         console.error('Erro ' + err);
+        localStorage.clear();
         navigate('/login');
       });
   };

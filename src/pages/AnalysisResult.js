@@ -47,9 +47,9 @@ const AnalysisResult = () => {
         <Typography variant="h6" mt={3} mb={2}>
           {'Resultados dos cálculos de conformidade dos setores:'}
         </Typography>
-        {result?.sectors.map((sector) => {
+        {result?.sectors.map((sector, index) => {
           return (
-            <Typography mt={1}>
+            <Typography mt={1} key={index}>
               {`Setor ${sector.name.replace(/^\w/, (c) =>
                 c.toUpperCase(),
               )} obteve índice final de não conformidade de ${

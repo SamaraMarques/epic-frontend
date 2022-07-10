@@ -52,6 +52,7 @@ const Analyses = () => {
       })
       .catch((err) => {
         console.log(err);
+        navigate(`/enterprises`);
       });
   };
 

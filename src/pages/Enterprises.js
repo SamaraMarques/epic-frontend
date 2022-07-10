@@ -33,6 +33,7 @@ const Enterprises = () => {
       .then((response) => setEnterprises(response.data))
       .catch((err) => {
         console.log(err);
+        localStorage.clear();
         navigate('/');
       });
 
@@ -46,6 +47,8 @@ const Enterprises = () => {
       })
       .catch((err) => {
         console.log(err);
+        localStorage.clear();
+        navigate(`/`);
       });
   }, [token, navigate, user, setUser]);
 

@@ -77,6 +77,7 @@ function SectorQuestions() {
       .then((response) => {})
       .catch((err) => {
         console.error('Erro ' + err);
+        navigate(`/enterprises`);
       });
     if (!nextSector) {
       navigate(`/analyses/${analysis_id}/result`);

@@ -79,9 +79,7 @@ function EnterpriseQuestions() {
       })
       .catch((err) => {
         console.error('Erro ' + err);
-        navigate(
-          `/analyses/${analysis_id}/sector/${nextSector}?remainingSectors=${sectorsWithCommas}`,
-        );
+        navigate(`/enterprise/${enterprise_id}/sectors`);
       });
   };
 
