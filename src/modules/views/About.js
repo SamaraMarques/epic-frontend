@@ -13,10 +13,11 @@ const item = {
   px: 5,
 };
 
-function ProductValues() {
+function About() {
   return (
     <Box
       component="section"
+      id="about"
       sx={{ display: 'flex', overflow: 'hidden', bgcolor: 'secondary.light' }}
     >
       <Container sx={{ mt: 15, mb: 30, display: 'flex', position: 'relative' }}>
@@ -34,12 +35,18 @@ function ProductValues() {
                 Sobre o projeto
               </Typography>
               <Typography variant="h5">
+                {'EPIC é uma ferramenta desenvolvida para auxiliar empresas '}
+                {'de pequeno e médio porte '}
+                {'a mapear seus processos e informações, '}
+                {'a fim de ampliar o nível de segurança desses dados. '}
+              </Typography>
+              <Typography variant="h5" mt={1.5}>
                 {
-                  'From the latest trendy boutique hotel to the iconic palace with XXL pool'
+                  'Através de um cadastro simples e rápido e das respostas de questões objetivas relacionas à segurança e à Lei Geral de Proteção de Dados (LGPD) '
                 }
-
+                {'o usuário terá acesso gratuito à um relatório '}
                 {
-                  ', go for a mini-vacation just a few subway stops away from your home.'
+                  'que irá auxiliá-lo na identifição da conformidade e no processo de adequação à Lei.'
                 }
               </Typography>
             </Box>
@@ -50,4 +57,4 @@ function ProductValues() {
   );
 }
 
-export default ProductValues;
+export default About;

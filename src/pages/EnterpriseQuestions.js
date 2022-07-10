@@ -8,12 +8,13 @@ import withRoot from '../modules/withRoot';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import EnterpriseQuestion from '../components/EnterpriseQuestion';
+import Typography from '../modules/components/Typography';
 
 function EnterpriseQuestions() {
   const { analysis_id, enterprise_id } = useParams();
   const [sent, setSent] = useState(false);
   const [sectors, setSectors] = useState([]);
-  const [enterprise, setEnterprise] = useState({});
+  const [enterprise, setEnterprise] = useState(null);
   const [token, setToken] = useState('');
 
   const navigate = useNavigate();
@@ -32,7 +33,8 @@ function EnterpriseQuestions() {
       .get(`/enterprises/${enterprise_id}/sectors`)
       .then((response) => setSectors(response.data))
       .catch((err) => {
-        console.error('Erro ' + err);
+        console.log(err);
+        navigate(`/enterprises`);
       });
     api
       .get(`/enterprises/${enterprise_id}`)
@@ -40,7 +42,7 @@ function EnterpriseQuestions() {
       .catch((err) => {
         console.error('Erro ' + err);
       });
-  }, [token, setSectors, setEnterprise, enterprise_id]);
+  }, [token, setSectors, setEnterprise, enterprise_id, navigate]);
 
   const sectorsIds = sectors.map((sector) => sector.id);
 
@@ -66,7 +68,6 @@ function EnterpriseQuestions() {
       event['question-seven'] ?? '1',
       event['question-eight'] ?? '1',
     ];
-    console.log({ answers });
     api
       .post(`/analyses/${analysis_id}/enterprises/${enterprise_id}`, {
         answers: { answers },
@@ -90,36 +91,39 @@ function EnterpriseQuestions() {
         <Form onSubmit={handleSubmit} subscription={{ submitting: true }}>
           {({ handleSubmit: handleSubmit2, submitting }) => (
             <Box component="form" onSubmit={handleSubmit2}>
+              <Typography variant="h5">
+                {enterprise?.name.replace(/^\w/, (c) => c.toUpperCase())}
+              </Typography>
               <EnterpriseQuestion
-                question="Sua empresa gerencia riscos de segurança da informação?"
+                question="1) Sua empresa gerencia riscos de segurança da informação?"
                 id="question-one"
               />
               <EnterpriseQuestion
-                question="Sua empresa possui controles de entrada para restringir o acesso às instalações a fim de impedir o acesso físico não autorizado?"
+                question="2) Sua empresa possui controles de entrada para restringir o acesso às instalações a fim de impedir o acesso físico não autorizado?"
                 id="question-two"
               />
               <EnterpriseQuestion
-                question="Sua empresa possui uma política de segurança da informação aprovada que suporta a segurança da informação de acordo com as necessidades do negócio?"
+                question="3) Sua empresa possui uma política de segurança da informação aprovada que suporta a segurança da informação de acordo com as necessidades do negócio?"
                 id="question-three"
               />
               <EnterpriseQuestion
-                question="Sua empresa possui treinamento regular de conscientização sobre segurança da informação para todos os funcionários?"
+                question="4) Sua empresa possui treinamento regular de conscientização sobre segurança da informação para todos os funcionários?"
                 id="question-four"
               />
               <EnterpriseQuestion
-                question="Sua empresa faz backup rotineiramente dos dados armazenados para ajudar a restaurar as informações em caso de desastre?"
+                question="5) Sua empresa faz backup rotineiramente dos dados armazenados para ajudar a restaurar as informações em caso de desastre?"
                 id="question-five"
               />
               <EnterpriseQuestion
-                question="Sua empresa gerencia com segurança os colaboradores que trabalham remotamente a partir de suas casas (teletrabalho)?"
+                question="6) Sua empresa gerencia com segurança os colaboradores que trabalham remotamente a partir de suas casas (teletrabalho)?"
                 id="question-six"
               />
               <EnterpriseQuestion
-                question="Sua empresa possui firewalls de limite para proteger os computadores contra ataques externos e ajudar a evitar violações de dados?"
+                question="7) Sua empresa possui firewalls de limite para proteger os computadores contra ataques externos e ajudar a evitar violações de dados?"
                 id="question-seven"
               />
               <EnterpriseQuestion
-                question="Sua empresa possui defesas anti malware com gestão centralizada para proteger os computadores contra infecções por malware?"
+                question="8) Sua empresa possui defesas anti malware com gestão centralizada para proteger os computadores contra infecções por malware?"
                 id="question-eight"
               />
               <FormSpy subscription={{ submitError: true }}>

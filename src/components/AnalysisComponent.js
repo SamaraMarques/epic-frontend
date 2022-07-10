@@ -1,4 +1,4 @@
-import { Box, Button, Stack } from '@mui/material';
+import { Box, Button, Grid } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import ArticleIcon from '@mui/icons-material/Article';
 import React from 'react';
@@ -10,20 +10,31 @@ const Div = styled('div')(({ theme }) => ({
 }));
 
 const AnalysisComponent = ({ id, enterprise_id, created_at }) => {
-  const formattedDate = new Date(created_at).toLocaleDateString('pt-BR');
+  const formattedDate = new Date(created_at).toLocaleString('pt-BR', {
+    dateStyle: 'short',
+    timeStyle: 'short',
+  });
   return (
-    <Box m={2}>
-      <Stack spacing={3} direction="row">
-        <Stack direction="column">
+    <Box
+      m={1}
+      sx={{
+        border: '2px solid ',
+        borderRadius: 2,
+      }}
+    >
+      <Grid container p={1}>
+        <Grid item xs={5}>
           <Div>{`Análise #${id}`}</Div>
-          <Div>{`Data: ${formattedDate}`}</Div>
-        </Stack>
-        <Stack>
+        </Grid>
+        <Grid item xs={5}>
+          <Div sx={{ minWidth: 100 }}>{`Data: ${formattedDate}`}</Div>
+        </Grid>
+        <Grid item xs={2}>
           <Button variant="contained" href={`/analyses/${id}/result`}>
             <ArticleIcon />
           </Button>
-        </Stack>
-      </Stack>
+        </Grid>
+      </Grid>
     </Box>
   );
 };

@@ -9,11 +9,14 @@ import axios from 'axios';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import SectorQuestion from '../components/SectorQuestion';
 import DegreeQuestion from '../components/DegreeQuestion';
+import Typography from '../modules/components/Typography';
 
 function SectorQuestions() {
   const { analysis_id, sector_id } = useParams();
-  const [sector, setSector] = useState({});
+  const [sector, setSector] = useState(null);
   const [token, setToken] = useState('');
+
+  const navigate = useNavigate();
 
   if (!token) {
     setToken(localStorage.getItem('token'));
@@ -30,9 +33,10 @@ function SectorQuestions() {
       .get(`/sectors/${sector_id}`)
       .then((response) => setSector(response.data))
       .catch((err) => {
-        console.error('Erro ' + err);
+        console.log(err);
+        navigate(`/enterprises`);
       });
-  }, [token, setSector, sector_id]);
+  }, [token, setSector, sector_id, navigate]);
 
   const queryString = new URLSearchParams(useLocation().search);
 
@@ -40,8 +44,6 @@ function SectorQuestions() {
   const [nextSector, ...otherSectors] = sectorsIds;
 
   const sectorsWithCommas = otherSectors.join(',');
-
-  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     const api = axios.create({
@@ -65,8 +67,8 @@ function SectorQuestions() {
     ];
 
     const data = {
-      gci: event['gci'] ?? '2',
-      gin: event['gin'] ?? '2',
+      gci: event['question-gci'] ?? '2',
+      gin: event['question-gin'] ?? '2',
       answers: { answers },
     };
 
@@ -91,6 +93,9 @@ function SectorQuestions() {
         <Form onSubmit={handleSubmit} subscription={{ submitting: true }}>
           {({ handleSubmit: handleSubmit2, submitting }) => (
             <Box component="form" onSubmit={handleSubmit2} noValidate>
+              <Typography variant="h5">
+                {sector?.name.replace(/^\w/, (c) => c.toUpperCase())}
+              </Typography>
               <DegreeQuestion
                 question="Qual o grau de criticidade da informação com a qual o setor lida?"
                 id="question-gci"
@@ -100,47 +105,47 @@ function SectorQuestions() {
                 id="question-gin"
               />
               <SectorQuestion
-                question="A obtenção de dados pessoais é realizada por meio de termo de consentimento?"
+                question="1) obtenção de dados pessoais é realizada por meio de termo de consentimento?"
                 id="question-one"
               />
               <SectorQuestion
-                question="Em caso de obtenção de dados pessoais de menores de idade é realizada por meio de termo de consentimento dado pelos pais ou responsável legal?"
+                question="2) Em caso de obtenção de dados pessoais de menores de idade é realizada por meio de termo de consentimento dado pelos pais ou responsável legal?"
                 id="question-two"
               />
               <SectorQuestion
-                question="São estabelecidos acordos escritos que garantem a proteção e a segurança dos dados pessoais com todos terceirizados que processam dados pessoais em seu nome?"
+                question="3) São estabelecidos acordos escritos que garantem a proteção e a segurança dos dados pessoais com todos terceirizados que processam dados pessoais em seu nome?"
                 id="question-three"
               />
               <SectorQuestion
-                question="O tratamento de dados pessoais sensíveis é realizado de maneira diferenciada dos demais dados pessoais?"
+                question="4) O tratamento de dados pessoais sensíveis é realizado de maneira diferenciada dos demais dados pessoais?"
                 id="question-four"
               />
               <SectorQuestion
-                question="Em caso de transferência internacional de dados pessoais é garantido a proteção dos mesmos?"
+                question="5) Em caso de transferência internacional de dados pessoais é garantido a proteção dos mesmos?"
                 id="question-five"
               />
               <SectorQuestion
-                question="Existe um processo para descartar com segurança dados pessoais que não são mais necessários?"
+                question="6) Existe um processo para descartar com segurança dados pessoais que não são mais necessários?"
                 id="question-six"
               />
               <SectorQuestion
-                question="Existe um plano de ação em caso de destruição, perda, alteração ou vazamento de dados?"
+                question="7) Existe um plano de ação em caso de destruição, perda, alteração ou vazamento de dados?"
                 id="question-seven"
               />
               <SectorQuestion
-                question="É assegurado ao titular dos dados métodos de acesso, correção, eliminação, portabilidade, revogação de consentimento e informações sobre compartilhamento de seus dados?"
+                question="8) É assegurado ao titular dos dados métodos de acesso, correção, eliminação, portabilidade, revogação de consentimento e informações sobre compartilhamento de seus dados?"
                 id="question-eight"
               />
               <SectorQuestion
-                question="É disponibilizado aos titulares documentação com informações quanto a forma que são realizadas as etapas do tratamento dos dados? (conforme Art. 5º X da LGPD)"
+                question="9) É disponibilizado aos titulares documentação com informações quanto a forma que são realizadas as etapas do tratamento dos dados? (conforme Art. 5º X da LGPD)"
                 id="question-nine"
               />
               <SectorQuestion
-                question="São mantidos registros sobre as operações de tratamento de dados realizadas pelos agentes?"
+                question="10) São mantidos registros sobre as operações de tratamento de dados realizadas pelos agentes?"
                 id="question-ten"
               />
               <SectorQuestion
-                question="São adotadas medidas de segurança de modo a proteger os dados pessoais de acessos não autorizados ou de qualquer forma de tratamento ilícito?"
+                question="11) São adotadas medidas de segurança de modo a proteger os dados pessoais de acessos não autorizados ou de qualquer forma de tratamento ilícito?"
                 id="question-eleven"
               />
               <FormSpy subscription={{ submitError: true }}>

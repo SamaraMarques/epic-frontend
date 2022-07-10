@@ -3,11 +3,14 @@ import { useParams, useNavigate } from 'react-router-dom';
 import * as axios from 'axios';
 import SectorComponent from '../components/SectorComponent';
 import { Box, Button, Stack } from '@mui/material';
+import withRoot from '../modules/withRoot';
+import AppAppBar from '../modules/views/AppAppBar';
 
 const Enterprise = () => {
   const { enterprise_id } = useParams();
   const [sectors, setSectors] = useState([]);
   const [token, setToken] = useState('');
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
   if (!token) {
@@ -15,6 +18,10 @@ const Enterprise = () => {
   }
 
   useEffect(() => {
+    if (!user) {
+      setUser(JSON.parse(localStorage.getItem('user')));
+    }
+
     const api = axios.create({
       baseURL: process.env.REACT_APP_API_URL,
       withCredentials: true,
@@ -27,10 +34,15 @@ const Enterprise = () => {
         console.log(err);
         navigate('/enterprises');
       });
-  }, [token, navigate, enterprise_id]);
+  }, [token, navigate, enterprise_id, user, setUser]);
+
   return (
     <Box>
-      <Stack m={2} spacing={2} direction="row">
+      <AppAppBar user={user} />
+      <Stack m={4} spacing={2} direction="row">
+        <Button variant="contained" href={`/enterprises`}>
+          Minhas empresas
+        </Button>
         <Button
           variant="contained"
           href={`/enterprise/${enterprise_id}/sectors/create`}
@@ -44,7 +56,7 @@ const Enterprise = () => {
           Análises
         </Button>
       </Stack>
-      <Stack m={3} spacing={3} direction="column">
+      <Stack m={3} direction="column">
         {sectors.map((enterprise, index) => {
           return (
             <SectorComponent key={index} name={enterprise?.name} id={index} />
@@ -55,4 +67,4 @@ const Enterprise = () => {
   );
 };
 
-export default Enterprise;
+export default withRoot(Enterprise);

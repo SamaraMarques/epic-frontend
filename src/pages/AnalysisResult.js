@@ -1,19 +1,15 @@
-import { Box, Stack, styled } from '@mui/material';
+import { Box, Stack } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Typography from '../modules/components/Typography';
-
-const Div = styled('div')(({ theme }) => ({
-  ...theme.typography.button,
-  backgroundColor: theme.palette.background.paper,
-  padding: theme.spacing(1),
-}));
+import defineClassificacao from '../modules/defineClassificacao';
+import withRoot from '../modules/withRoot';
 
 const AnalysisResult = () => {
   const { analysis_id } = useParams();
 
-  const [result, setResult] = useState({});
+  const [result, setResult] = useState(null);
   const [token, setToken] = useState('');
   const navigate = useNavigate();
 
@@ -32,24 +28,39 @@ const AnalysisResult = () => {
       .then((response) => setResult(response.data))
       .catch((err) => {
         console.log(err);
+        navigate(`/enterprises`);
       });
   }, [token, navigate, analysis_id]);
 
   return (
     <Box>
       <Stack m={3} direction="column">
-        <h1>Resultado da análise</h1>
-        <Typography>{JSON.stringify(result)}</Typography>
-        <Typography>{`Empresa de nome "${result.enterprise.name}" apresentou índice de segurança ${result.enterprise.index}`}</Typography>
-        <Typography>
+        <Typography variant="h5">Resultado da análise</Typography>
+        <Typography mt={3}>{`Empresa de nome ${result?.enterprise.name.replace(
+          /^\w/,
+          (c) => c.toUpperCase(),
+        )} apresentou índice de segurança ${
+          result?.enterprise.index
+        } implementado, considerado ${defineClassificacao(
+          result?.enterprise.index,
+        )}`}</Typography>
+        <Typography variant="h6" mt={3} mb={2}>
           {'Resultados dos cálculos de conformidade dos setores:'}
         </Typography>
-        {result.sectors.map((sector) => {
-          return <Typography>{JSON.stringify(sector)}</Typography>;
+        {result?.sectors.map((sector) => {
+          return (
+            <Typography mt={1}>
+              {`Setor ${sector.name.replace(/^\w/, (c) =>
+                c.toUpperCase(),
+              )} obteve índice final de não conformidade de ${
+                sector.finalNCIndex
+              } (${defineClassificacao(sector.finalNCIndex)})`}
+            </Typography>
+          );
         })}
       </Stack>
     </Box>
   );
 };
 
-export default AnalysisResult;
+export default withRoot(AnalysisResult);

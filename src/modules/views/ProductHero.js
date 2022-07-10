@@ -1,6 +1,5 @@
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import * as React from 'react';
-import Button from '../components/Button';
 import Typography from '../components/Typography';
 import ProductHeroLayout from './ProductHeroLayout';
 
@@ -35,16 +34,16 @@ export default function ProductHero() {
         variant="h5"
         sx={{ mb: 4, mt: 4 }}
       >
-        Uma análise simples e gratuita para auxiliar sua empresa a estar em
+        Uma análise simples e gratuita para identificar se sua empresa está em
         confirmadade com a LGPD.
       </Typography>
       <Button
         color="secondary"
         variant="contained"
-        size="large"
         component="a"
+        size="large"
         href="/register"
-        sx={{ minWidth: 200 }}
+        sx={{ minWidth: 250, minHeight: 60 }}
       >
         Faça sua análise
       </Button>

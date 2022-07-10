@@ -17,6 +17,13 @@ import { useNavigate } from 'react-router-dom';
 function SignIn() {
   const [sent, setSent] = React.useState(false);
   const navigate = useNavigate();
+  const [user, setUser] = React.useState(null);
+
+  React.useEffect(() => {
+    if (!user) {
+      setUser(JSON.parse(localStorage.getItem('user')));
+    }
+  }, [user, setUser]);
 
   const validate = (values) => {
     const errors = required(['email', 'password'], values);
@@ -36,7 +43,7 @@ function SignIn() {
 
     const api = axios.create({
       baseURL: process.env.REACT_APP_API_URL,
-      headers: { Accept: 'application/json' }
+      headers: { Accept: 'application/json' },
     });
     api
       .post('/login', event)
@@ -52,7 +59,7 @@ function SignIn() {
 
   return (
     <React.Fragment>
-      <AppAppBar />
+      <AppAppBar user={user} />
       <AppForm>
         <React.Fragment>
           <Typography variant="h3" gutterBottom marked="center" align="center">

@@ -3,12 +3,15 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import AnalysisComponent from '../components/AnalysisComponent';
+import AppAppBar from '../modules/views/AppAppBar';
+import withRoot from '../modules/withRoot';
 
 const Analyses = () => {
   const { enterprise_id } = useParams();
 
   const [analyses, setAnalyses] = useState([]);
   const [token, setToken] = useState('');
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
   if (!token) {
@@ -16,6 +19,10 @@ const Analyses = () => {
   }
 
   useEffect(() => {
+    if (!user) {
+      setUser(JSON.parse(localStorage.getItem('user')));
+    }
+
     const api = axios.create({
       baseURL: process.env.REACT_APP_API_URL,
       withCredentials: true,
@@ -26,9 +33,9 @@ const Analyses = () => {
       .then((response) => setAnalyses(response.data))
       .catch((err) => {
         console.log(err);
-        navigate(`/enterprises/${enterprise_id}`);
+        navigate(`/enterprises`);
       });
-  }, [token, navigate, enterprise_id]);
+  }, [token, navigate, enterprise_id, user, setUser]);
 
   const createAnalysis = () => {
     const api = axios.create({
@@ -50,19 +57,29 @@ const Analyses = () => {
 
   return (
     <Box>
-      <Box m={4}>
+      <AppAppBar user={user} />
+      <Stack m={4} spacing={2} direction="row">
+        <Button variant="contained" href={`/enterprises`}>
+          Minhas empresas
+        </Button>
         <Button variant="contained" onClick={createAnalysis}>
           Nova análise
         </Button>
-      </Box>
+        <Button
+          variant="contained"
+          href={`/enterprise/${enterprise_id}/sectors`}
+        >
+          Setores
+        </Button>
+      </Stack>
       <Stack m={3} direction="column">
-        {analyses.map((analize, index) => {
+        {analyses.map((analisys, index) => {
           return (
             <AnalysisComponent
               key={index}
-              id={analize?.id}
-              enterprise_id={analize?.enterprise_id}
-              created_at={analize?.created_at}
+              id={analisys?.id}
+              enterprise_id={analisys?.enterprise_id}
+              created_at={analisys?.created_at}
             />
           );
         })}
@@ -71,4 +88,4 @@ const Analyses = () => {
   );
 };
 
-export default Analyses;
+export default withRoot(Analyses);

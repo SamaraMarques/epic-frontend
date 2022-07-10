@@ -6,10 +6,14 @@ import Stack from '@mui/material/Stack';
 import axios from 'axios';
 
 import EnterpriseComponent from '../components/EnterpriseComponent';
+import AppAppBar from '../modules/views/AppAppBar';
+import withRoot from '../modules/withRoot';
 
 const Enterprises = () => {
   const [enterprises, setEnterprises] = useState([]);
   const [token, setToken] = useState('');
+  const [user, setUser] = useState(null);
+
   const navigate = useNavigate();
 
   if (!token) {
@@ -17,6 +21,10 @@ const Enterprises = () => {
   }
 
   useEffect(() => {
+    if (!user) {
+      setUser(JSON.parse(localStorage.getItem('user')));
+    }
+
     const api = axios.create({
       baseURL: process.env.REACT_APP_API_URL,
       withCredentials: true,
@@ -29,14 +37,29 @@ const Enterprises = () => {
         console.log(err);
         navigate('/');
       });
-  }, [token, navigate]);
+
+    api
+      .get('/me')
+      .then((response) => {
+        localStorage.setItem(
+          'user',
+          JSON.stringify(response.data.user) || undefined,
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [token, navigate, user, setUser]);
 
   return (
     <Box>
-      <Box m={2}>
-        <Button variant="contained" href="/enterprise/create">Criar Empresa</Button>
+      <AppAppBar user={user} />
+      <Box m={4}>
+        <Button variant="contained" href="/enterprise/create">
+          Criar Empresa
+        </Button>
       </Box>
-      <Stack m={5} spacing={5} direction="column">
+      <Stack m={3} direction="column">
         {enterprises.map((enterprise, index) => {
           return (
             <EnterpriseComponent
@@ -51,4 +74,4 @@ const Enterprises = () => {
   );
 };
 
-export default Enterprises;
+export default withRoot(Enterprises);
