@@ -13,7 +13,7 @@ function Index() {
 
   React.useEffect(() => {
     if (!user) {
-      setUser(JSON.parse(localStorage.getItem('user')));
+      setUser(JSON.parse(localStorage.getItem('user')) || null);
     }
     if (pathname === '/' && hash !== '') {
       setTimeout(() => {
