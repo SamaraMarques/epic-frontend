@@ -1,30 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import { Form, FormSpy } from 'react-final-form';
 import { Box } from '@mui/material';
-import AppForm from '../modules/views/AppForm';
-import FormButton from '../modules/form/FormButton';
-import FormFeedback from '../modules/form/FormFeedback';
-import withRoot from '../modules/withRoot';
+import AppForm from '../../../../src/modules/views/AppForm';
+import FormButton from '../../../../src/modules/form/FormButton';
+import FormFeedback from '../../../../src/modules/form/FormFeedback';
+import withRoot from '../../../../src/modules/withRoot';
 import axios from 'axios';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import SectorQuestion from '../components/SectorQuestion';
-import DegreeQuestion from '../components/DegreeQuestion';
-import Typography from '../modules/components/Typography';
+import SectorQuestion from '../../../../src/components/SectorQuestion';
+import DegreeQuestion from '../../../../src/components/DegreeQuestion';
+import Typography from '../../../../src/modules/components/Typography';
+import { useRouter } from 'next/router';
 
 function SectorQuestions() {
-  const { analysis_id, sector_id } = useParams();
+  const router = useRouter();
+  const { analysis_id, sector_id } = router.query;
   const [sector, setSector] = useState(null);
   const [token, setToken] = useState('');
 
-  const navigate = useNavigate();
-
-  if (!token) {
-    setToken(localStorage.getItem('token'));
+  if (typeof window !== 'undefined') {
+    if (!token) {
+      setToken(window.localStorage.getItem('token'));
+    }
   }
 
   useEffect(() => {
     const api = axios.create({
-      baseURL: process.env.REACT_APP_API_URL,
+      baseURL: process.env.NEXT_PUBLIC_API_URL,
       withCredentials: true,
       headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' },
     });
@@ -34,20 +35,18 @@ function SectorQuestions() {
       .then((response) => setSector(response.data))
       .catch((err) => {
         console.log(err);
-        navigate(`/enterprises`);
+        router.push(`/enterprises`);
       });
-  }, [token, setSector, sector_id, navigate]);
+  }, [token, setSector, sector_id, router]);
 
-  const queryString = new URLSearchParams(useLocation().search);
-
-  const sectorsIds = queryString.get('remainingSectors').split(',');
+  const sectorsIds = router.query.remainingSectors.split(',');
   const [nextSector, ...otherSectors] = sectorsIds;
 
   const sectorsWithCommas = otherSectors.join(',');
 
   const handleSubmit = (event) => {
     const api = axios.create({
-      baseURL: process.env.REACT_APP_API_URL,
+      baseURL: process.env.NEXT_PUBLIC_API_URL,
       withCredentials: true,
       headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' },
     });
@@ -77,12 +76,12 @@ function SectorQuestions() {
       .then((response) => {})
       .catch((err) => {
         console.error('Erro ' + err);
-        navigate(`/enterprises`);
+        router.push(`/enterprises`);
       });
     if (!nextSector) {
-      navigate(`/analyses/${analysis_id}/result`);
+      router.push(`/analyses/${analysis_id}/result`);
     } else {
-      navigate(
+      router.push(
         `/analyses/${analysis_id}/sector/${nextSector}?remainingSectors=${sectorsWithCommas}`,
       );
     }

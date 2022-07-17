@@ -1,25 +1,26 @@
 import { Box, Stack } from '@mui/material';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import Typography from '../modules/components/Typography';
-import defineClassificacao from '../modules/defineClassificacao';
-import withRoot from '../modules/withRoot';
+import Typography from '../../../src/modules/components/Typography';
+import defineClassificacao from '../../../src/modules/defineClassificacao';
+import withRoot from '../../../src/modules/withRoot';
 
 const AnalysisResult = () => {
-  const { analysis_id } = useParams();
-
+  const router = useRouter();
+  const { analysis_id } = router.query;
   const [result, setResult] = useState(null);
   const [token, setToken] = useState('');
-  const navigate = useNavigate();
 
-  if (!token) {
-    setToken(localStorage.getItem('token'));
+  if (typeof window !== 'undefined') {
+    if (!token) {
+      setToken(window.localStorage.getItem('token'));
+    }
   }
 
   useEffect(() => {
     const api = axios.create({
-      baseURL: process.env.REACT_APP_API_URL,
+      baseURL: process.env.NEXT_PUBLIC_API_URL,
       withCredentials: true,
       headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' },
     });
@@ -28,9 +29,9 @@ const AnalysisResult = () => {
       .then((response) => setResult(response.data))
       .catch((err) => {
         console.log(err);
-        navigate(`/enterprises`);
+        router.push(`/enterprises`);
       });
-  }, [token, navigate, analysis_id]);
+  }, [token, router, analysis_id]);
 
   return (
     <Box>

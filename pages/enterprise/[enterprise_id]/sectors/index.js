@@ -1,29 +1,33 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
 import * as axios from 'axios';
-import SectorComponent from '../components/SectorComponent';
 import { Box, Button, Stack } from '@mui/material';
-import withRoot from '../modules/withRoot';
-import AppAppBar from '../modules/views/AppAppBar';
+import withRoot from '../../../../src/modules/withRoot';
+import AppAppBar from '../../../../src/modules/views/AppAppBar';
+import { useRouter } from 'next/router';
+import SectorComponent from '../../../../src/components/SectorComponent';
 
 const Enterprise = () => {
-  const { enterprise_id } = useParams();
+  const router = useRouter();
+  const { enterprise_id } = router.query;
   const [sectors, setSectors] = useState([]);
   const [token, setToken] = useState('');
   const [user, setUser] = useState(null);
-  const navigate = useNavigate();
 
-  if (!token) {
-    setToken(localStorage.getItem('token'));
+  if (typeof window !== 'undefined') {
+    if (!token) {
+      setToken(window.localStorage.getItem('token'));
+    }
   }
 
   useEffect(() => {
-    if (!user) {
-      setUser(JSON.parse(localStorage.getItem('user')));
+    if (typeof window !== 'undefined') {
+      if (!user) {
+        setUser(JSON.parse(window.localStorage.getItem('user')));
+      }
     }
 
     const api = axios.create({
-      baseURL: process.env.REACT_APP_API_URL,
+      baseURL: process.env.NEXT_PUBLIC_API_URL,
       withCredentials: true,
       headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' },
     });
@@ -32,9 +36,9 @@ const Enterprise = () => {
       .then((response) => setSectors(response.data))
       .catch((err) => {
         console.log(err);
-        navigate('/enterprises');
+        router.push('/enterprises');
       });
-  }, [token, navigate, enterprise_id, user, setUser]);
+  }, [token, router, enterprise_id, user, setUser]);
 
   return (
     <Box>

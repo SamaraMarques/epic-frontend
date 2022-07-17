@@ -9,11 +9,9 @@ function AppForm(props) {
     <Box
       sx={{
         display: 'flex',
-        backgroundImage: 'url(/static/onepirate/appCurvyLines.png)',
-        backgroundRepeat: 'no-repeat',
       }}
     >
-      <Container maxWidth="sm">
+      <Container>
         <Box sx={{ mt: 7, mb: 12 }}>
           <Paper
             background="light"

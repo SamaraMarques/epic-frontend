@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
 import { Field, Form, FormSpy } from 'react-final-form';
 import { Box } from '@mui/material';
-import Typography from '../modules/components/Typography';
-import AppForm from '../modules/views/AppForm';
-import { required } from '../modules/form/validation';
-import RFTextField from '../modules/form/RFTextField';
-import FormButton from '../modules/form/FormButton';
-import FormFeedback from '../modules/form/FormFeedback';
-import withRoot from '../modules/withRoot';
+import Typography from '../../../../src/modules/components/Typography';
+import AppForm from '../../../../src/modules/views/AppForm';
+import { required } from '../../../../src/modules/form/validation';
+import RFTextField from '../../../../src/modules/form/RFTextField';
+import FormButton from '../../../../src/modules/form/FormButton';
+import FormFeedback from '../../../../src/modules/form/FormFeedback';
+import withRoot from '../../../../src/modules/withRoot';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router';
 
-function CreateEnterprise() {
+function CreateSector() {
+  const router = useRouter();
+  const { enterprise_id } = router.query;
   const [sent, setSent] = useState(false);
   const [token, setToken] = useState('');
-  const navigate = useNavigate();
 
   const validate = (values) => {
     const errors = required(['name'], values);
@@ -22,26 +23,28 @@ function CreateEnterprise() {
     return errors;
   };
 
-  if (!token) {
-    setToken(localStorage.getItem('token'));
+  if (typeof window !== 'undefined') {
+    if (!token) {
+      setToken(window.localStorage.getItem('token'));
+    }
   }
 
   const handleSubmit = (event) => {
     setSent(true);
 
     const api = axios.create({
-      baseURL: process.env.REACT_APP_API_URL,
+      baseURL: process.env.NEXT_PUBLIC_API_URL,
       withCredentials: true,
       headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' },
     });
     api
-      .post('/enterprises', event)
+      .post(`/enterprises/${enterprise_id}/sectors`, event)
       .then((response) => {
-        navigate('/enterprises');
+        router.push(`/enterprise/${enterprise_id}/sectors`);
       })
       .catch((err) => {
         console.error('Erro ' + err);
-        navigate('/enterprises');
+        router.push(`/enterprise/${enterprise_id}/sectors`);
       });
   };
 
@@ -50,7 +53,7 @@ function CreateEnterprise() {
       <AppForm>
         <React.Fragment>
           <Typography variant="h3" gutterBottom marked="center" align="center">
-            Criar empresa
+            Criar setor
           </Typography>
         </React.Fragment>
         <Form
@@ -105,4 +108,4 @@ function CreateEnterprise() {
   );
 }
 
-export default withRoot(CreateEnterprise);
+export default withRoot(CreateSector);

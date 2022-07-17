@@ -11,7 +11,13 @@ function isEmail(string) {
 }
 
 export function email(value) {
-  return value && !isEmail(value.trim()) ? 'Invalid email' : null;
+  return value && !isEmail(value.trim()) ? 'Endereço de email inválido' : null;
+}
+
+export function password(value) {
+  return value && value.length < 8
+    ? 'Senha deve ter mais de 8 caracteres'
+    : null;
 }
 
 function isDirty(value) {
@@ -22,7 +28,7 @@ export function required(requiredFields, values) {
   return requiredFields.reduce(
     (fields, field) => ({
       ...fields,
-      ...(isDirty(values[field]) ? undefined : { [field]: 'Required' }),
+      ...(isDirty(values[field]) ? undefined : { [field]: 'Obrigatório' }),
     }),
     {},
   );

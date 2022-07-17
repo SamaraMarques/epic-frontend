@@ -17,12 +17,6 @@ function About() {
       sx={{ display: 'flex', overflow: 'hidden', bgcolor: 'secondary.light' }}
     >
       <Container sx={{ mt: 15, mb: 30, display: 'flex', position: 'relative' }}>
-        <Box
-          component="img"
-          src="/static/themes/onepirate/productCurvyLines.png"
-          alt="curvy lines"
-          sx={{ pointerEvents: 'none', position: 'absolute', top: -180 }}
-        />
         <Grid container justifyContent={'center'} spacing={5}>
           <Grid item xs={12}>
             <Box sx={item}>

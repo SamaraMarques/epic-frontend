@@ -1,30 +1,34 @@
 import { Box, Button, Stack } from '@mui/material';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import AnalysisComponent from '../components/AnalysisComponent';
-import AppAppBar from '../modules/views/AppAppBar';
-import withRoot from '../modules/withRoot';
+import AnalysisComponent from '../../../src/components/AnalysisComponent';
+import AppAppBar from '../../../src/modules/views/AppAppBar';
+import withRoot from '../../../src/modules/withRoot';
 
 const Analyses = () => {
-  const { enterprise_id } = useParams();
+  const router = useRouter();
+  const { enterprise_id } = router.query;
 
   const [analyses, setAnalyses] = useState([]);
   const [token, setToken] = useState('');
   const [user, setUser] = useState(null);
-  const navigate = useNavigate();
 
-  if (!token) {
-    setToken(localStorage.getItem('token'));
+  if (typeof window !== 'undefined') {
+    if (!token) {
+      setToken(window.localStorage.getItem('token'));
+    }
   }
 
   useEffect(() => {
-    if (!user) {
-      setUser(JSON.parse(localStorage.getItem('user')));
+    if (typeof window !== 'undefined') {
+      if (!user) {
+        setUser(JSON.parse(window.localStorage.getItem('user')));
+      }
     }
 
     const api = axios.create({
-      baseURL: process.env.REACT_APP_API_URL,
+      baseURL: process.env.NEXT_PUBLIC_API_URL,
       withCredentials: true,
       headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' },
     });
@@ -33,26 +37,26 @@ const Analyses = () => {
       .then((response) => setAnalyses(response.data))
       .catch((err) => {
         console.log(err);
-        navigate(`/enterprises`);
+        router.push(`/enterprises`);
       });
-  }, [token, navigate, enterprise_id, user, setUser]);
+  }, [token, router, enterprise_id, user, setUser]);
 
   const createAnalysis = () => {
     const api = axios.create({
-      baseURL: process.env.REACT_APP_API_URL,
+      baseURL: process.env.NEXT_PUBLIC_API_URL,
       withCredentials: true,
       headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' },
     });
     api
       .post(`/enterprises/${enterprise_id}/analyses`)
       .then((response) => {
-        navigate(
+        router.push(
           `/analyses/${response.data['analysis_id']}/enterprise/${enterprise_id}`,
         );
       })
       .catch((err) => {
         console.log(err);
-        navigate(`/enterprises`);
+        router.push(`/enterprises`);
       });
   };
 

@@ -1,31 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { Form, FormSpy } from 'react-final-form';
 import { Box } from '@mui/material';
-import AppForm from '../modules/views/AppForm';
-import FormButton from '../modules/form/FormButton';
-import FormFeedback from '../modules/form/FormFeedback';
-import withRoot from '../modules/withRoot';
+import AppForm from '../../../../src/modules/views/AppForm';
+import FormButton from '../../../../src/modules/form/FormButton';
+import FormFeedback from '../../../../src/modules/form/FormFeedback';
+import withRoot from '../../../../src/modules/withRoot';
 import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
-import EnterpriseQuestion from '../components/EnterpriseQuestion';
-import Typography from '../modules/components/Typography';
+import EnterpriseQuestion from '../../../../src/components/EnterpriseQuestion';
+import Typography from '../../../../src/modules/components/Typography';
+import { useRouter } from 'next/router';
 
 function EnterpriseQuestions() {
-  const { analysis_id, enterprise_id } = useParams();
+  const router = useRouter();
+  const { analysis_id, enterprise_id } = router.query;
   const [sent, setSent] = useState(false);
   const [sectors, setSectors] = useState([]);
   const [enterprise, setEnterprise] = useState(null);
   const [token, setToken] = useState('');
 
-  const navigate = useNavigate();
-
-  if (!token) {
-    setToken(localStorage.getItem('token'));
+  if (typeof window !== 'undefined') {
+    if (!token) {
+      setToken(window.localStorage.getItem('token'));
+    }
   }
 
   useEffect(() => {
     const api = axios.create({
-      baseURL: process.env.REACT_APP_API_URL,
+      baseURL: process.env.NEXT_PUBLIC_API_URL,
       withCredentials: true,
       headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' },
     });
@@ -34,7 +35,7 @@ function EnterpriseQuestions() {
       .then((response) => setSectors(response.data))
       .catch((err) => {
         console.log(err);
-        navigate(`/enterprises`);
+        router.push(`/enterprises`);
       });
     api
       .get(`/enterprises/${enterprise_id}`)
@@ -42,7 +43,7 @@ function EnterpriseQuestions() {
       .catch((err) => {
         console.error('Erro ' + err);
       });
-  }, [token, setSectors, setEnterprise, enterprise_id, navigate]);
+  }, [token, setSectors, setEnterprise, enterprise_id, router]);
 
   const sectorsIds = sectors.map((sector) => sector.id);
 
@@ -54,7 +55,7 @@ function EnterpriseQuestions() {
     setSent(true);
 
     const api = axios.create({
-      baseURL: process.env.REACT_APP_API_URL,
+      baseURL: process.env.NEXT_PUBLIC_API_URL,
       withCredentials: true,
       headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' },
     });
@@ -73,13 +74,13 @@ function EnterpriseQuestions() {
         answers: { answers },
       })
       .then((response) => {
-        navigate(
+        router.push(
           `/analyses/${analysis_id}/sector/${nextSector}?remainingSectors=${sectorsWithCommas}`,
         );
       })
       .catch((err) => {
         console.error('Erro ' + err);
-        navigate(`/enterprise/${enterprise_id}/sectors`);
+        router.push(`/enterprise/${enterprise_id}/sectors`);
       });
   };
 

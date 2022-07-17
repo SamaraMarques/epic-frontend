@@ -1,21 +1,19 @@
 import React, { useState } from 'react';
 import { Field, Form, FormSpy } from 'react-final-form';
 import { Box } from '@mui/material';
-import Typography from '../modules/components/Typography';
-import AppForm from '../modules/views/AppForm';
-import { required } from '../modules/form/validation';
-import RFTextField from '../modules/form/RFTextField';
-import FormButton from '../modules/form/FormButton';
-import FormFeedback from '../modules/form/FormFeedback';
-import withRoot from '../modules/withRoot';
+import Typography from '../../src/modules/components/Typography';
+import AppForm from '../../src/modules/views/AppForm';
+import { required } from '../../src/modules/form/validation';
+import RFTextField from '../../src/modules/form/RFTextField';
+import FormButton from '../../src/modules/form/FormButton';
+import FormFeedback from '../../src/modules/form/FormFeedback';
+import withRoot from '../../src/modules/withRoot';
 import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-function CreateSector() {
-  const { enterprise_id } = useParams();
+function CreateEnterprise() {
   const [sent, setSent] = useState(false);
   const [token, setToken] = useState('');
-
   const navigate = useNavigate();
 
   const validate = (values) => {
@@ -32,18 +30,18 @@ function CreateSector() {
     setSent(true);
 
     const api = axios.create({
-      baseURL: process.env.REACT_APP_API_URL,
+      baseURL: process.env.NEXT_PUBLIC_API_URL,
       withCredentials: true,
       headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' },
     });
     api
-      .post(`/enterprises/${enterprise_id}/sectors`, event)
+      .post('/enterprises', event)
       .then((response) => {
-        navigate(`/enterprise/${enterprise_id}/sectors`);
+        navigate('/enterprises');
       })
       .catch((err) => {
         console.error('Erro ' + err);
-        navigate(`/enterprise/${enterprise_id}/sectors`);
+        navigate('/enterprises');
       });
   };
 
@@ -52,7 +50,7 @@ function CreateSector() {
       <AppForm>
         <React.Fragment>
           <Typography variant="h3" gutterBottom marked="center" align="center">
-            Criar setor
+            Criar empresa
           </Typography>
         </React.Fragment>
         <Form
@@ -107,4 +105,4 @@ function CreateSector() {
   );
 }
 
-export default withRoot(CreateSector);
+export default withRoot(CreateEnterprise);

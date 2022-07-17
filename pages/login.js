@@ -1,20 +1,24 @@
 import * as React from 'react';
-import { Box, Link } from '@mui/material';
 import { Field, Form, FormSpy } from 'react-final-form';
-import Typography from '../modules/components/Typography';
-import AppFooter from '../modules/views/AppFooter';
-import AppAppBar from '../modules/views/AppAppBar';
-import AppForm from '../modules/views/AppForm';
-import { email, required } from '../modules/form/validation';
-import RFTextField from '../modules/form/RFTextField';
-import FormButton from '../modules/form/FormButton';
-import FormFeedback from '../modules/form/FormFeedback';
-import withRoot from '../modules/withRoot';
+import { Box, Link } from '@mui/material';
+import Typography from '../src/modules/components/Typography';
+import AppFooter from '../src/modules/views/AppFooter';
+import AppAppBar from '../src/modules/views/AppAppBar';
+import AppForm from '../src/modules/views/AppForm';
+import { email, password, required } from '../src/modules/form/validation';
+import RFTextField from '../src/modules/form/RFTextField';
+import FormButton from '../src/modules/form/FormButton';
+import FormFeedback from '../src/modules/form/FormFeedback';
+import withRoot from '../src/modules/withRoot';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 
-function SignUp() {
+function SignIn() {
   const [sent, setSent] = React.useState(false);
   const [user, setUser] = React.useState(null);
+  const router = useRouter();
+
+  console.log(process.env.NEXT_PUBLIC_API_URL);
 
   React.useEffect(() => {
     if (!user) {
@@ -23,10 +27,7 @@ function SignUp() {
   }, [user, setUser]);
 
   const validate = (values) => {
-    const errors = required(
-      ['name', 'email', 'password', 'password_confirmation'],
-      values,
-    );
+    const errors = required(['email', 'password'], values);
 
     if (!errors.email) {
       const emailError = email(values.email);
@@ -35,21 +36,33 @@ function SignUp() {
       }
     }
 
+    if (!errors.password) {
+      const passwordError = password(values.password);
+      if (passwordError) {
+        errors.password = passwordError;
+      }
+    }
+
     return errors;
   };
 
   const handleSubmit = (event) => {
     setSent(true);
-    console.log(event);
+
     const api = axios.create({
-      baseURL: process.env.REACT_APP_API_URL,
+      baseURL: process.env.NEXT_PUBLIC_API_URL,
       headers: { Accept: 'application/json' },
     });
     api
-      .post('/register', event)
-      .then((response) => console.log(response.data))
+      .post('/login', event)
+      .then((response) => {
+        localStorage.setItem('token', response.data.token || undefined);
+        router.push('/enterprises');
+      })
       .catch((err) => {
-        console.error('Erro   ' + err);
+        console.error('Erro ' + err);
+        localStorage.clear();
+        router.push('/login');
       });
   };
 
@@ -59,11 +72,12 @@ function SignUp() {
       <AppForm>
         <React.Fragment>
           <Typography variant="h3" gutterBottom marked="center" align="center">
-            Registrar
+            Entrar
           </Typography>
           <Typography variant="body2" align="center">
-            <Link href="/login" underline="always">
-              Já possui uma conta?
+            {'Não é registrado ainda? '}
+            <Link href="/register/" align="center" underline="always">
+              Registre-se aqui
             </Link>
           </Typography>
         </React.Fragment>
@@ -80,17 +94,8 @@ function SignUp() {
               sx={{ mt: 6 }}
             >
               <Field
-                autoFocus
-                component={RFTextField}
-                disabled={submitting || sent}
-                autoComplete="given-name"
-                fullWidth
-                label="Nome"
-                name="name"
-                required
-              />
-              <Field
                 autoComplete="email"
+                autoFocus
                 component={RFTextField}
                 disabled={submitting || sent}
                 fullWidth
@@ -98,26 +103,17 @@ function SignUp() {
                 margin="normal"
                 name="email"
                 required
+                size="large"
               />
               <Field
                 fullWidth
+                size="large"
                 component={RFTextField}
                 disabled={submitting || sent}
                 required
                 name="password"
-                autoComplete="new-password"
+                autoComplete="current-password"
                 label="Senha"
-                type="password"
-                margin="normal"
-              />
-              <Field
-                fullWidth
-                component={RFTextField}
-                disabled={submitting || sent}
-                required
-                name="password_confirmation"
-                autoComplete="new-password"
-                label="Confirmar Senha"
                 type="password"
                 margin="normal"
               />
@@ -131,8 +127,10 @@ function SignUp() {
                 }
               </FormSpy>
               <FormButton
+                type="submit"
                 sx={{ mt: 3, mb: 2 }}
                 disabled={submitting || sent}
+                size="large"
                 color="secondary"
                 fullWidth
               >
@@ -141,10 +139,18 @@ function SignUp() {
             </Box>
           )}
         </Form>
+        <Typography align="center">
+          <Link
+            underline="always"
+            href="/premium-themes/onepirate/forgot-password/"
+          >
+            Esqueceu sua senha?
+          </Link>
+        </Typography>
       </AppForm>
       <AppFooter />
     </React.Fragment>
   );
 }
 
-export default withRoot(SignUp);
+export default withRoot(SignIn);

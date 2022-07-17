@@ -1,30 +1,33 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Box, Button, Stack } from '@mui/material';
 import axios from 'axios';
 
-import EnterpriseComponent from '../components/EnterpriseComponent';
-import AppAppBar from '../modules/views/AppAppBar';
-import withRoot from '../modules/withRoot';
+import EnterpriseComponent from '../src/components/EnterpriseComponent';
+import AppAppBar from '../src/modules/views/AppAppBar';
+import withRoot from '../src/modules/withRoot';
+import { useRouter } from 'next/router';
 
 const Enterprises = () => {
   const [enterprises, setEnterprises] = useState([]);
   const [token, setToken] = useState('');
   const [user, setUser] = useState(null);
+  const router = useRouter();
 
-  const navigate = useNavigate();
-
-  if (!token) {
-    setToken(localStorage.getItem('token'));
+  if (typeof window !== 'undefined') {
+    if (!token) {
+      setToken(window.localStorage.getItem('token'));
+    }
   }
 
   useEffect(() => {
-    if (!user) {
-      setUser(JSON.parse(localStorage.getItem('user')));
+    if (typeof window !== 'undefined') {
+      if (!user) {
+        setUser(JSON.parse(window.localStorage.getItem('user')));
+      }
     }
 
     const api = axios.create({
-      baseURL: process.env.REACT_APP_API_URL,
+      baseURL: process.env.NEXT_PUBLIC_API_URL,
       withCredentials: true,
       headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' },
     });
@@ -33,8 +36,8 @@ const Enterprises = () => {
       .then((response) => setEnterprises(response.data))
       .catch((err) => {
         console.log(err);
-        localStorage.clear();
-        navigate('/');
+        window.localStorage.clear();
+        router.push('/');
       });
 
     api
@@ -47,10 +50,10 @@ const Enterprises = () => {
       })
       .catch((err) => {
         console.log(err);
-        localStorage.clear();
-        navigate(`/`);
+        window.localStorage.clear();
+        router.push(`/`);
       });
-  }, [token, navigate, user, setUser]);
+  }, [token, router, user, setUser]);
 
   return (
     <Box>
@@ -76,3 +79,9 @@ const Enterprises = () => {
 };
 
 export default withRoot(Enterprises);
+
+export async function getServerSideProps(context) {
+  return {
+    props: {},
+  };
+}
