@@ -8,8 +8,8 @@ import RFTextField from '../../../../src/modules/form/RFTextField';
 import FormButton from '../../../../src/modules/form/FormButton';
 import FormFeedback from '../../../../src/modules/form/FormFeedback';
 import withRoot from '../../../../src/modules/withRoot';
-import axios from 'axios';
 import { useRouter } from 'next/router';
+import api from '../../../../src/utils/axiosClient';
 
 function CreateSector() {
   const router = useRouter();
@@ -32,13 +32,10 @@ function CreateSector() {
   const handleSubmit = (event) => {
     setSent(true);
 
-    const api = axios.create({
-      baseURL: process.env.NEXT_PUBLIC_API_URL,
-      withCredentials: true,
-      headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' },
-    });
     api
-      .post(`/enterprises/${enterprise_id}/sectors`, event)
+      .post(`/enterprises/${enterprise_id}/sectors`, event, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((response) => {
         router.push(`/enterprise/${enterprise_id}/sectors`);
       })

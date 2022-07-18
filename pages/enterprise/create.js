@@ -8,7 +8,7 @@ import RFTextField from '../../src/modules/form/RFTextField';
 import FormButton from '../../src/modules/form/FormButton';
 import FormFeedback from '../../src/modules/form/FormFeedback';
 import withRoot from '../../src/modules/withRoot';
-import axios from 'axios';
+import api from '../../src/utils/axiosClient';
 
 function CreateEnterprise() {
   const router = useRouter();
@@ -30,13 +30,12 @@ function CreateEnterprise() {
   const handleSubmit = (event) => {
     setSent(true);
 
-    const api = axios.create({
-      baseURL: process.env.NEXT_PUBLIC_API_URL,
-      withCredentials: true,
-      headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' },
-    });
     api
-      .post('/enterprises', event)
+      .post('/enterprises', event, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         router.push('/enterprises');
       })

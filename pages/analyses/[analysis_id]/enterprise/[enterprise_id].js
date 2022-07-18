@@ -5,10 +5,10 @@ import AppForm from '../../../../src/modules/views/AppForm';
 import FormButton from '../../../../src/modules/form/FormButton';
 import FormFeedback from '../../../../src/modules/form/FormFeedback';
 import withRoot from '../../../../src/modules/withRoot';
-import axios from 'axios';
 import EnterpriseQuestion from '../../../../src/components/EnterpriseQuestion';
 import Typography from '../../../../src/modules/components/Typography';
 import { useRouter } from 'next/router';
+import api from '../../../../src/utils/axiosClient';
 
 function EnterpriseQuestions() {
   const router = useRouter();
@@ -25,20 +25,19 @@ function EnterpriseQuestions() {
   }
 
   useEffect(() => {
-    const api = axios.create({
-      baseURL: process.env.NEXT_PUBLIC_API_URL,
-      withCredentials: true,
-      headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' },
-    });
     api
-      .get(`/enterprises/${enterprise_id}/sectors`)
+      .get(`/enterprises/${enterprise_id}/sectors`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((response) => setSectors(response.data))
       .catch((err) => {
         console.log(err);
         router.push(`/enterprises`);
       });
     api
-      .get(`/enterprises/${enterprise_id}`)
+      .get(`/enterprises/${enterprise_id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((response) => setEnterprise(response.data))
       .catch((err) => {
         console.error('Erro ' + err);
@@ -54,11 +53,6 @@ function EnterpriseQuestions() {
   const handleSubmit = (event) => {
     setSent(true);
 
-    const api = axios.create({
-      baseURL: process.env.NEXT_PUBLIC_API_URL,
-      withCredentials: true,
-      headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' },
-    });
     const answers = [
       event['question-one'] ?? '1',
       event['question-two'] ?? '1',
@@ -70,9 +64,15 @@ function EnterpriseQuestions() {
       event['question-eight'] ?? '1',
     ];
     api
-      .post(`/analyses/${analysis_id}/enterprises/${enterprise_id}`, {
-        answers: { answers },
-      })
+      .post(
+        `/analyses/${analysis_id}/enterprises/${enterprise_id}`,
+        {
+          answers: { answers },
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      )
       .then((response) => {
         router.push(
           `/analyses/${analysis_id}/sector/${nextSector}?remainingSectors=${sectorsWithCommas}`,

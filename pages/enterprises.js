@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Box, Button, Stack } from '@mui/material';
-import axios from 'axios';
 
 import EnterpriseComponent from '../src/components/EnterpriseComponent';
 import AppAppBar from '../src/modules/views/AppAppBar';
 import withRoot from '../src/modules/withRoot';
 import { useRouter } from 'next/router';
+import api from '../src/utils/axiosClient';
 
 const Enterprises = () => {
   const [enterprises, setEnterprises] = useState([]);
@@ -26,13 +26,8 @@ const Enterprises = () => {
       }
     }
 
-    const api = axios.create({
-      baseURL: process.env.NEXT_PUBLIC_API_URL,
-      withCredentials: true,
-      headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' },
-    });
     api
-      .get('/enterprises')
+      .get('/enterprises', { headers: { Authorization: `Bearer ${token}` } })
       .then((response) => setEnterprises(response.data))
       .catch((err) => {
         console.log(err);
@@ -41,7 +36,7 @@ const Enterprises = () => {
       });
 
     api
-      .get('/me')
+      .get('/me', { headers: { Authorization: `Bearer ${token}` } })
       .then((response) => {
         localStorage.setItem(
           'user',

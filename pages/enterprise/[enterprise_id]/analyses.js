@@ -1,10 +1,10 @@
 import { Box, Button, Stack } from '@mui/material';
-import axios from 'axios';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import AnalysisComponent from '../../../src/components/AnalysisComponent';
 import AppAppBar from '../../../src/modules/views/AppAppBar';
 import withRoot from '../../../src/modules/withRoot';
+import api from '../../../src/utils/axiosClient';
 
 const Analyses = () => {
   const router = useRouter();
@@ -27,13 +27,10 @@ const Analyses = () => {
       }
     }
 
-    const api = axios.create({
-      baseURL: process.env.NEXT_PUBLIC_API_URL,
-      withCredentials: true,
-      headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' },
-    });
     api
-      .get(`/enterprises/${enterprise_id}/analyses`)
+      .get(`/enterprises/${enterprise_id}/analyses`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((response) => setAnalyses(response.data))
       .catch((err) => {
         console.log(err);
@@ -42,13 +39,14 @@ const Analyses = () => {
   }, [token, router, enterprise_id, user, setUser]);
 
   const createAnalysis = () => {
-    const api = axios.create({
-      baseURL: process.env.NEXT_PUBLIC_API_URL,
-      withCredentials: true,
-      headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' },
-    });
     api
-      .post(`/enterprises/${enterprise_id}/analyses`)
+      .post(
+        `/enterprises/${enterprise_id}/analyses`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      )
       .then((response) => {
         router.push(
           `/analyses/${response.data['analysis_id']}/enterprise/${enterprise_id}`,

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import * as axios from 'axios';
 import { Box, Button, Stack } from '@mui/material';
 import withRoot from '../../../../src/modules/withRoot';
 import AppAppBar from '../../../../src/modules/views/AppAppBar';
 import { useRouter } from 'next/router';
 import SectorComponent from '../../../../src/components/SectorComponent';
+import api from '../../../../src/utils/axiosClient';
 
 const Enterprise = () => {
   const router = useRouter();
@@ -26,13 +26,10 @@ const Enterprise = () => {
       }
     }
 
-    const api = axios.create({
-      baseURL: process.env.NEXT_PUBLIC_API_URL,
-      withCredentials: true,
-      headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' },
-    });
     api
-      .get(`/enterprises/${enterprise_id}/sectors`)
+      .get(`/enterprises/${enterprise_id}/sectors`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((response) => setSectors(response.data))
       .catch((err) => {
         console.log(err);

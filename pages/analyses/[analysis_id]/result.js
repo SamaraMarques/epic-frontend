@@ -1,10 +1,10 @@
 import { Box, Stack } from '@mui/material';
-import axios from 'axios';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import Typography from '../../../src/modules/components/Typography';
 import defineClassificacao from '../../../src/modules/defineClassificacao';
 import withRoot from '../../../src/modules/withRoot';
+import api from '../../../src/utils/axiosClient';
 
 const AnalysisResult = () => {
   const router = useRouter();
@@ -19,13 +19,10 @@ const AnalysisResult = () => {
   }
 
   useEffect(() => {
-    const api = axios.create({
-      baseURL: process.env.NEXT_PUBLIC_API_URL,
-      withCredentials: true,
-      headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' },
-    });
     api
-      .get(`/analyses/${analysis_id}/result`)
+      .get(`/analyses/${analysis_id}/result`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((response) => setResult(response.data))
       .catch((err) => {
         console.log(err);

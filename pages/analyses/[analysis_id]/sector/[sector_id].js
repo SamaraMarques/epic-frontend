@@ -5,11 +5,11 @@ import AppForm from '../../../../src/modules/views/AppForm';
 import FormButton from '../../../../src/modules/form/FormButton';
 import FormFeedback from '../../../../src/modules/form/FormFeedback';
 import withRoot from '../../../../src/modules/withRoot';
-import axios from 'axios';
 import SectorQuestion from '../../../../src/components/SectorQuestion';
 import DegreeQuestion from '../../../../src/components/DegreeQuestion';
 import Typography from '../../../../src/modules/components/Typography';
 import { useRouter } from 'next/router';
+import api from '../../../../src/utils/axiosClient';
 
 function SectorQuestions() {
   const router = useRouter();
@@ -24,14 +24,10 @@ function SectorQuestions() {
   }
 
   useEffect(() => {
-    const api = axios.create({
-      baseURL: process.env.NEXT_PUBLIC_API_URL,
-      withCredentials: true,
-      headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' },
-    });
-
     api
-      .get(`/sectors/${sector_id}`)
+      .get(`/sectors/${sector_id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((response) => setSector(response.data))
       .catch((err) => {
         console.log(err);
@@ -45,12 +41,6 @@ function SectorQuestions() {
   const sectorsWithCommas = otherSectors.join(',');
 
   const handleSubmit = (event) => {
-    const api = axios.create({
-      baseURL: process.env.NEXT_PUBLIC_API_URL,
-      withCredentials: true,
-      headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' },
-    });
-
     const answers = [
       event['question-one'] ?? '1',
       event['question-two'] ?? '1',
@@ -72,7 +62,9 @@ function SectorQuestions() {
     };
 
     api
-      .post(`/analyses/${analysis_id}/sectors/${sector_id}`, data)
+      .post(`/analyses/${analysis_id}/sectors/${sector_id}`, data, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((response) => {})
       .catch((err) => {
         console.error('Erro ' + err);
