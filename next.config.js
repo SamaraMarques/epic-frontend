@@ -3,7 +3,7 @@ module.exports = {
     return [
       {
         source: '/api/:path*',
-        destination: 'http://localhost:8000/:path*', // Proxy to Backend
+        destination: 'http://epic-app:8000/:path*', // Proxy to Backend
       },
     ];
   },
