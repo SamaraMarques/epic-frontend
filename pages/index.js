@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import About from '../src/modules/views/About';
@@ -29,6 +30,9 @@ function Index() {
 
   return (
     <React.Fragment>
+      <Head>
+        <title>EPIC - Home</title>
+      </Head>
       <AppAppBar user={user} />
       <ProductHero />
       <About />

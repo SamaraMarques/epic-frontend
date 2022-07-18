@@ -12,6 +12,7 @@ import FormFeedback from '../src/modules/form/FormFeedback';
 import withRoot from '../src/modules/withRoot';
 import { useRouter } from 'next/router';
 import api from '../src/utils/axiosClient';
+import Head from 'next/head';
 
 function SignUp() {
   const router = useRouter();
@@ -62,6 +63,9 @@ function SignUp() {
 
   return (
     <React.Fragment>
+      <Head>
+        <title>EPIC - Registrar</title>
+      </Head>
       <AppAppBar user={user} />
       <AppForm>
         <React.Fragment>

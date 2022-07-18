@@ -1,4 +1,5 @@
 import { Box, Button, Stack } from '@mui/material';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import AnalysisComponent from '../../../src/components/AnalysisComponent';
@@ -60,6 +61,9 @@ const Analyses = () => {
 
   return (
     <Box>
+      <Head>
+        <title>EPIC - Análises</title>
+      </Head>
       <AppAppBar user={user} />
       <Stack m={4} spacing={2} direction="row">
         <Button variant="contained" href={`/enterprises`}>

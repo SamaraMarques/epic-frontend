@@ -6,6 +6,7 @@ import AppAppBar from '../src/modules/views/AppAppBar';
 import withRoot from '../src/modules/withRoot';
 import { useRouter } from 'next/router';
 import api from '../src/utils/axiosClient';
+import Head from 'next/head';
 
 const Enterprises = () => {
   const [enterprises, setEnterprises] = useState([]);
@@ -52,6 +53,9 @@ const Enterprises = () => {
 
   return (
     <Box>
+      <Head>
+        <title>EPIC - Empresas</title>
+      </Head>
       <AppAppBar user={user} />
       <Box m={4}>
         <Button variant="contained" href="/enterprise/create">

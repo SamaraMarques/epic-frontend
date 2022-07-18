@@ -1,4 +1,5 @@
 import { Box, Stack } from '@mui/material';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import Typography from '../../../src/modules/components/Typography';
@@ -32,6 +33,9 @@ const AnalysisResult = () => {
 
   return (
     <Box>
+      <Head>
+        <title>EPIC - Resultado da análise</title>
+      </Head>
       <Stack m={3} direction="column">
         <Typography variant="h5">Resultado da análise</Typography>
         <Typography mt={3}>{`Empresa de nome ${result?.enterprise.name.replace(

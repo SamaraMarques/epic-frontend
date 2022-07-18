@@ -9,6 +9,7 @@ import EnterpriseQuestion from '../../../../src/components/EnterpriseQuestion';
 import Typography from '../../../../src/modules/components/Typography';
 import { useRouter } from 'next/router';
 import api from '../../../../src/utils/axiosClient';
+import Head from 'next/head';
 
 function EnterpriseQuestions() {
   const router = useRouter();
@@ -86,6 +87,9 @@ function EnterpriseQuestions() {
 
   return (
     <React.Fragment>
+      <Head>
+        <title>EPIC - Questões da empresa</title>
+      </Head>
       <AppForm>
         <Form onSubmit={handleSubmit} subscription={{ submitting: true }}>
           {({ handleSubmit: handleSubmit2, submitting }) => (

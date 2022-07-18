@@ -22,7 +22,6 @@ export default function Document() {
         />
         <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
         <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-        <title>EPIC</title>
       </Head>
       <body>
         <Main />

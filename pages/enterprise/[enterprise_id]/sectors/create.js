@@ -10,6 +10,7 @@ import FormFeedback from '../../../../src/modules/form/FormFeedback';
 import withRoot from '../../../../src/modules/withRoot';
 import { useRouter } from 'next/router';
 import api from '../../../../src/utils/axiosClient';
+import Head from 'next/head';
 
 function CreateSector() {
   const router = useRouter();
@@ -47,6 +48,9 @@ function CreateSector() {
 
   return (
     <React.Fragment>
+      <Head>
+        <title>EPIC - Criar setor</title>
+      </Head>
       <AppForm>
         <React.Fragment>
           <Typography variant="h3" gutterBottom marked="center" align="center">

@@ -5,6 +5,7 @@ import AppAppBar from '../../../../src/modules/views/AppAppBar';
 import { useRouter } from 'next/router';
 import SectorComponent from '../../../../src/components/SectorComponent';
 import api from '../../../../src/utils/axiosClient';
+import Head from 'next/head';
 
 const Enterprise = () => {
   const router = useRouter();
@@ -39,6 +40,9 @@ const Enterprise = () => {
 
   return (
     <Box>
+      <Head>
+        <title>EPIC - Setores</title>
+      </Head>
       <AppAppBar user={user} />
       <Stack m={4} spacing={2} direction="row">
         <Button variant="contained" href={`/enterprises`}>

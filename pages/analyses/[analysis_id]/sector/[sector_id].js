@@ -10,6 +10,7 @@ import DegreeQuestion from '../../../../src/components/DegreeQuestion';
 import Typography from '../../../../src/modules/components/Typography';
 import { useRouter } from 'next/router';
 import api from '../../../../src/utils/axiosClient';
+import Head from 'next/head';
 
 function SectorQuestions() {
   const router = useRouter();
@@ -81,6 +82,9 @@ function SectorQuestions() {
 
   return (
     <React.Fragment>
+      <Head>
+        <title>EPIC - Questões do setor</title>
+      </Head>
       <AppForm>
         <Form onSubmit={handleSubmit} subscription={{ submitting: true }}>
           {({ handleSubmit: handleSubmit2, submitting }) => (

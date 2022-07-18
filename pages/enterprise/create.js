@@ -10,6 +10,7 @@ import FormFeedback from '../../src/modules/form/FormFeedback';
 import withRoot from '../../src/modules/withRoot';
 import api from '../../src/utils/axiosClient';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 
 function CreateEnterprise() {
   const router = useRouter();
@@ -48,6 +49,9 @@ function CreateEnterprise() {
 
   return (
     <React.Fragment>
+      <Head>
+        <title>EPIC - Criar empresa</title>
+      </Head>
       <AppForm>
         <React.Fragment>
           <Typography variant="h3" gutterBottom marked="center" align="center">
