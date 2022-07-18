@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import SectorComponent from '../../../../src/components/SectorComponent';
 import api from '../../../../src/utils/axiosClient';
 import Head from 'next/head';
+import Typography from '../../../../src/modules/components/Typography';
 
 const Enterprise = () => {
   const router = useRouter();
@@ -62,11 +63,18 @@ const Enterprise = () => {
         </Button>
       </Stack>
       <Stack m={3} direction="column">
-        {sectors.map((enterprise, index) => {
-          return (
-            <SectorComponent key={index} name={enterprise?.name} id={index} />
-          );
-        })}
+        {sectors.length ? (
+          sectors.map((enterprise, index) => {
+            return (
+              <SectorComponent key={index} name={enterprise?.name} id={index} />
+            );
+          })
+        ) : (
+          <Typography ml={4} mt={4}>
+            Esta empresa não possui nenhum setor cadastrado, clique em adicionar
+            setor para cadastrar.
+          </Typography>
+        )}
       </Stack>
     </Box>
   );

@@ -7,6 +7,7 @@ import withRoot from '../src/modules/withRoot';
 import { useRouter } from 'next/router';
 import api from '../src/utils/axiosClient';
 import Head from 'next/head';
+import Typography from '../src/modules/components/Typography';
 
 const Enterprises = () => {
   const [enterprises, setEnterprises] = useState([]);
@@ -63,15 +64,22 @@ const Enterprises = () => {
         </Button>
       </Box>
       <Stack m={3} direction="column">
-        {enterprises.map((enterprise, index) => {
-          return (
-            <EnterpriseComponent
-              key={index}
-              name={enterprise.name}
-              id={enterprise.id}
-            />
-          );
-        })}
+        {enterprises.length ? (
+          enterprises.map((enterprise, index) => {
+            return (
+              <EnterpriseComponent
+                key={index}
+                name={enterprise.name}
+                id={enterprise.id}
+              />
+            );
+          })
+        ) : (
+          <Typography ml={4} mt={4}>
+            Você não possui empresa cadastrada, clique em criar empresa para
+            cadastrar.
+          </Typography>
+        )}
       </Stack>
     </Box>
   );
