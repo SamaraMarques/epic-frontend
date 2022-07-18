@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import * as React from 'react';
 import About from '../src/modules/views/About';
 import AppAppBar from '../src/modules/views/AppAppBar';
@@ -7,23 +8,24 @@ import ProductHero from '../src/modules/views/ProductHero';
 import withRoot from '../src/modules/withRoot';
 
 function Index() {
-  const { pathname, hash, key } = {};
+  const router = useRouter();
+  const { pathname, asPath } = router;
   const [user, setUser] = React.useState(null);
 
   React.useEffect(() => {
     if (!user) {
       setUser(JSON.parse(localStorage.getItem('user')) || null);
     }
-    if (pathname === '/' && hash !== '') {
+    if (pathname === '/' && asPath !== '/') {
       setTimeout(() => {
-        const id = hash.replace('#', '');
+        const id = asPath.replace('#', '');
         const element = document.getElementById(id);
         if (element) {
           element.scrollIntoView();
         }
       }, 0);
     }
-  }, [pathname, hash, key, user, setUser]);
+  }, [pathname, asPath, user, setUser]);
 
   return (
     <React.Fragment>

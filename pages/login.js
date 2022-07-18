@@ -18,8 +18,6 @@ function SignIn() {
   const [user, setUser] = React.useState(null);
   const router = useRouter();
 
-  console.log(process.env.NEXT_PUBLIC_API_URL);
-
   React.useEffect(() => {
     if (!user) {
       setUser(JSON.parse(localStorage.getItem('user')));

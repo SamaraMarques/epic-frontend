@@ -9,12 +9,11 @@ import FormButton from '../../src/modules/form/FormButton';
 import FormFeedback from '../../src/modules/form/FormFeedback';
 import withRoot from '../../src/modules/withRoot';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
 function CreateEnterprise() {
+  const router = useRouter();
   const [sent, setSent] = useState(false);
   const [token, setToken] = useState('');
-  const navigate = useNavigate();
 
   const validate = (values) => {
     const errors = required(['name'], values);
@@ -22,8 +21,10 @@ function CreateEnterprise() {
     return errors;
   };
 
-  if (!token) {
-    setToken(localStorage.getItem('token'));
+  if (typeof window !== 'undefined') {
+    if (!token) {
+      setToken(window.localStorage.getItem('token'));
+    }
   }
 
   const handleSubmit = (event) => {
@@ -37,11 +38,11 @@ function CreateEnterprise() {
     api
       .post('/enterprises', event)
       .then((response) => {
-        navigate('/enterprises');
+        router.push('/enterprises');
       })
       .catch((err) => {
         console.error('Erro ' + err);
-        navigate('/enterprises');
+        router.push('/enterprises');
       });
   };
 

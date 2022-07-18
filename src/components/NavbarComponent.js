@@ -1,8 +1,8 @@
+import { useRouter } from 'next/router';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const Navbar = ({ logged = true }) => {
-  let navigate = useNavigate();
+  const router = useRouter();
 
   return (
     <div className="d-flex flex-row p-2">
@@ -17,7 +17,7 @@ const Navbar = ({ logged = true }) => {
         <button
           type="button"
           className="btn btn-secondary m-2"
-          onClick={() => navigate('/login')}
+          onClick={() => router.push('/login')}
         >
           Login
         </button>

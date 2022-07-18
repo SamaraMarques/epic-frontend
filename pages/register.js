@@ -11,8 +11,10 @@ import FormButton from '../src/modules/form/FormButton';
 import FormFeedback from '../src/modules/form/FormFeedback';
 import withRoot from '../src/modules/withRoot';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 
 function SignUp() {
+  const router = useRouter();
   const [sent, setSent] = React.useState(false);
   const [user, setUser] = React.useState(null);
 
@@ -47,16 +49,18 @@ function SignUp() {
 
   const handleSubmit = (event) => {
     setSent(true);
-    console.log(event);
     const api = axios.create({
       baseURL: process.env.NEXT_PUBLIC_API_URL,
       headers: { Accept: 'application/json' },
     });
     api
       .post('/register', event)
-      .then((response) => console.log(response.data))
+      .then((response) => {
+        router.push('login');
+      })
       .catch((err) => {
         console.error('Erro   ' + err);
+        router.push('/register');
       });
   };
 
