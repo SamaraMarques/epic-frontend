@@ -9,6 +9,7 @@ import FormButton from '../../src/modules/form/FormButton';
 import FormFeedback from '../../src/modules/form/FormFeedback';
 import withRoot from '../../src/modules/withRoot';
 import api from '../../src/utils/axiosClient';
+import { useRouter } from 'next/router';
 
 function CreateEnterprise() {
   const router = useRouter();
