@@ -16,3 +16,9 @@ services:
       - CHOKIDAR_USEPOLLING=true
       - PORT=80
     command: yarn start
+    networks:
+      - default
+
+networks:
+  default:
+    driver: bridge
