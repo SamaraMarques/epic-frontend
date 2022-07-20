@@ -12,7 +12,7 @@ export default function defineClassificacao(indiceNCFinal) {
     case indiceNCFinal <= 0.8:
       return 'alto';
 
-    case indiceNCFinal < 1:
+    case indiceNCFinal <= 1:
       return 'muito alto';
 
     default:

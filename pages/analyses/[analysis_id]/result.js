@@ -7,6 +7,8 @@ import defineClassificacao from '../../../src/modules/defineClassificacao';
 import withRoot from '../../../src/modules/withRoot';
 import api from '../../../src/utils/axiosClient';
 import { useReactToPrint } from 'react-to-print';
+import enterpriseQuestions from '../../../src/utils/enterpriseQuestions';
+import SectorsResultTable from '../../../src/components/SectorsResultTable';
 
 const AnalysisResult = () => {
   const router = useRouter();
@@ -59,6 +61,11 @@ const AnalysisResult = () => {
       });
   };
 
+  const formattedDate = new Date(result?.created_at).toLocaleString('pt-BR', {
+    dateStyle: 'short',
+    timeStyle: 'short',
+  });
+
   return (
     <Box>
       <Head>
@@ -91,32 +98,31 @@ const AnalysisResult = () => {
         </Typography>
         {result?.enterprise.answers.map((answer, index) => {
           return (
-            <Typography my={1}>
-              {`Pergunta ${index}: ${answer ? 'Sim' : 'Não'}`}
-            </Typography>
+            <Stack my={1} direction="row">
+              <Typography mr={1} key={index}>
+                {`${enterpriseQuestions[index]} `}
+              </Typography>
+              <Typography sx={{ fontWeight: 700 }}>{`${
+                answer === '1' ? 'Sim' : 'Não'
+              }`}</Typography>
+            </Stack>
           );
         })}
-        <Typography my={3} variant="h6">{`Índice de segurança da empresa: ${
-          result?.enterprise.index
-        } --- Classificação: ${defineClassificacao(
-          result?.enterprise.index,
-        )}`}</Typography>
+        <Typography mt={3} variant="h6">
+          {`Índice de segurança da empresa: ${result?.enterprise.index}`}
+        </Typography>
+
+        <Typography mb={3} variant="h6">
+          {`Classificação: ${defineClassificacao(result?.enterprise.index)}`}
+        </Typography>
         <Divider sx={{ borderBottomWidth: 2 }} />
         <Typography variant="h6" mt={3} mb={2}>
           {'Índice de não conformidade com a LGPD:'}
         </Typography>
-
-        {result?.sectors.map((sector, index) => {
-          return (
-            <Typography mt={1} key={index}>
-              {`Setor ${sector.name.replace(/^\w/, (c) =>
-                c.toUpperCase(),
-              )} obteve índice final de não conformidade de ${
-                sector.finalNCIndex
-              } (${defineClassificacao(sector.finalNCIndex)})`}
-            </Typography>
-          );
-        })}
+        <SectorsResultTable sectors={result?.sectors} />
+        <Typography mt={6} ml={2}>
+          {`Data/Horário: ${formattedDate}`}
+        </Typography>
       </Stack>
     </Box>
   );

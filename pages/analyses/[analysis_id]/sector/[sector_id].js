@@ -11,6 +11,7 @@ import Typography from '../../../../src/modules/components/Typography';
 import { useRouter } from 'next/router';
 import api from '../../../../src/utils/axiosClient';
 import Head from 'next/head';
+import sectorQuestions from '../../../../src/utils/sectorQuestions';
 
 function SectorQuestions() {
   const router = useRouter();
@@ -100,48 +101,36 @@ function SectorQuestions() {
                 question="Qual o grau de importância do setor para o negócio?"
                 id="question-gin"
               />
+              <SectorQuestion question={sectorQuestions[0]} id="question-one" />
+              <SectorQuestion question={sectorQuestions[1]} id="question-two" />
               <SectorQuestion
-                question="1) obtenção de dados pessoais é realizada por meio de termo de consentimento?"
-                id="question-one"
-              />
-              <SectorQuestion
-                question="2) Em caso de obtenção de dados pessoais de menores de idade é realizada por meio de termo de consentimento dado pelos pais ou responsável legal?"
-                id="question-two"
-              />
-              <SectorQuestion
-                question="3) São estabelecidos acordos escritos que garantem a proteção e a segurança dos dados pessoais com todos terceirizados que processam dados pessoais em seu nome?"
+                question={sectorQuestions[2]}
                 id="question-three"
               />
               <SectorQuestion
-                question="4) O tratamento de dados pessoais sensíveis é realizado de maneira diferenciada dos demais dados pessoais?"
+                question={sectorQuestions[3]}
                 id="question-four"
               />
               <SectorQuestion
-                question="5) Em caso de transferência internacional de dados pessoais é garantido a proteção dos mesmos?"
+                question={sectorQuestions[4]}
                 id="question-five"
               />
+              <SectorQuestion question={sectorQuestions[5]} id="question-six" />
               <SectorQuestion
-                question="6) Existe um processo para descartar com segurança dados pessoais que não são mais necessários?"
-                id="question-six"
-              />
-              <SectorQuestion
-                question="7) Existe um plano de ação em caso de destruição, perda, alteração ou vazamento de dados?"
+                question={sectorQuestions[6]}
                 id="question-seven"
               />
               <SectorQuestion
-                question="8) É assegurado ao titular dos dados métodos de acesso, correção, eliminação, portabilidade, revogação de consentimento e informações sobre compartilhamento de seus dados?"
+                question={sectorQuestions[7]}
                 id="question-eight"
               />
               <SectorQuestion
-                question="9) É disponibilizado aos titulares documentação com informações quanto a forma que são realizadas as etapas do tratamento dos dados? (conforme Art. 5º X da LGPD)"
+                question={sectorQuestions[8]}
                 id="question-nine"
               />
+              <SectorQuestion question={sectorQuestions[9]} id="question-ten" />
               <SectorQuestion
-                question="10) São mantidos registros sobre as operações de tratamento de dados realizadas pelos agentes?"
-                id="question-ten"
-              />
-              <SectorQuestion
-                question="11) São adotadas medidas de segurança de modo a proteger os dados pessoais de acessos não autorizados ou de qualquer forma de tratamento ilícito?"
+                question={sectorQuestions[10]}
                 id="question-eleven"
               />
               <FormSpy subscription={{ submitError: true }}>

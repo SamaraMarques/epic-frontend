@@ -39,26 +39,6 @@ const Analyses = () => {
       });
   }, [token, router, enterprise_id, user, setUser]);
 
-  const createAnalysis = () => {
-    api
-      .post(
-        `/enterprises/${enterprise_id}/analyses`,
-        {},
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        },
-      )
-      .then((response) => {
-        router.push(
-          `/analyses/${response.data['analysis_id']}/enterprise/${enterprise_id}`,
-        );
-      })
-      .catch((err) => {
-        console.log(err);
-        router.push(`/enterprises`);
-      });
-  };
-
   return (
     <Box>
       <Head>
@@ -69,7 +49,10 @@ const Analyses = () => {
         <Button variant="contained" href={`/enterprises`}>
           Minhas empresas
         </Button>
-        <Button variant="contained" onClick={createAnalysis}>
+        <Button
+          variant="contained"
+          href={`/analyses/confirmation/${enterprise_id}`}
+        >
           Nova análise
         </Button>
         <Button

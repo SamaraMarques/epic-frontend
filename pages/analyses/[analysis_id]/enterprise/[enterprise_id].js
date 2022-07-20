@@ -10,6 +10,7 @@ import Typography from '../../../../src/modules/components/Typography';
 import { useRouter } from 'next/router';
 import api from '../../../../src/utils/axiosClient';
 import Head from 'next/head';
+import enterpriseQuestions from '../../../../src/utils/enterpriseQuestions';
 
 function EnterpriseQuestions() {
   const router = useRouter();
@@ -98,35 +99,35 @@ function EnterpriseQuestions() {
                 {enterprise?.name.replace(/^\w/, (c) => c.toUpperCase())}
               </Typography>
               <EnterpriseQuestion
-                question="1) Sua empresa gerencia riscos de segurança da informação?"
+                question={enterpriseQuestions[0]}
                 id="question-one"
               />
               <EnterpriseQuestion
-                question="2) Sua empresa possui controles de entrada para restringir o acesso às instalações a fim de impedir o acesso físico não autorizado?"
+                question={enterpriseQuestions[1]}
                 id="question-two"
               />
               <EnterpriseQuestion
-                question="3) Sua empresa possui uma política de segurança da informação aprovada que suporta a segurança da informação de acordo com as necessidades do negócio?"
+                question={enterpriseQuestions[2]}
                 id="question-three"
               />
               <EnterpriseQuestion
-                question="4) Sua empresa possui treinamento regular de conscientização sobre segurança da informação para todos os funcionários?"
+                question={enterpriseQuestions[3]}
                 id="question-four"
               />
               <EnterpriseQuestion
-                question="5) Sua empresa faz backup rotineiramente dos dados armazenados para ajudar a restaurar as informações em caso de desastre?"
+                question={enterpriseQuestions[4]}
                 id="question-five"
               />
               <EnterpriseQuestion
-                question="6) Sua empresa gerencia com segurança os colaboradores que trabalham remotamente a partir de suas casas (teletrabalho)?"
+                question={enterpriseQuestions[5]}
                 id="question-six"
               />
               <EnterpriseQuestion
-                question="7) Sua empresa possui firewalls de limite para proteger os computadores contra ataques externos e ajudar a evitar violações de dados?"
+                question={enterpriseQuestions[6]}
                 id="question-seven"
               />
               <EnterpriseQuestion
-                question="8) Sua empresa possui defesas anti malware com gestão centralizada para proteger os computadores contra infecções por malware?"
+                question={enterpriseQuestions[7]}
                 id="question-eight"
               />
               <FormSpy subscription={{ submitError: true }}>
