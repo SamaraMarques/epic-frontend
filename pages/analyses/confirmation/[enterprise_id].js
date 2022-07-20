@@ -13,6 +13,7 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import AppForm from '../../../src/modules/views/AppForm';
 import api from '../../../src/utils/axiosClient';
+import InfoIcon from '@mui/icons-material/Info';
 
 function ConfirmationQuestion() {
   const router = useRouter();
@@ -69,6 +70,11 @@ function ConfirmationQuestion() {
                 '1) A empresa realiza tratamento de dados pessoais obtidos no território nacional com o objetivo de oferta ou fornecimento de bens ou serviços?'
               }
             </Typography>
+            <Typography align={'justify'} sx={{ fontSize: 14, color: 'gray' }}>
+              {
+                '(É considerado tratamento de dados as seguintes operações: coleta, produção, recepção, classificação, utilização, acesso, reprodução, transmissão, distribuição, processamento, arquivamento, armazenamento, eliminação, avaliação ou controle da informação, modificação, comunicação,transferência, difusão ou extração, conforme Art. 5º X).'
+              }
+            </Typography>
             <RadioGroup
               row
               aria-labelledby="demo-radio-buttons-group-label"
@@ -97,13 +103,16 @@ function ConfirmationQuestion() {
               <FormControlLabel value="0" control={<Radio />} label="Não" />
             </RadioGroup>
           </Box>
-          <Box m={4}>
-            <Typography>
-              {firstValue === '0' &&
-                secondValue === '0' &&
-                'A LGPD não se aplica à empresa, portanto, caso não deseje, não há necessidade de utilização do questionário'}
-            </Typography>
-          </Box>
+          {firstValue === '0' && secondValue === '0' && (
+            <Stack m={4} spacing={1} direction="row">
+              <InfoIcon />
+              <Typography>
+                {
+                  'A LGPD não se aplica à empresa, portanto, caso não deseje, não há necessidade de utilização do questionário'
+                }
+              </Typography>
+            </Stack>
+          )}
           <Stack m={2} spacing={2} direction="row">
             <Button variant="contained" href={`/enterprises`}>
               Retornar
