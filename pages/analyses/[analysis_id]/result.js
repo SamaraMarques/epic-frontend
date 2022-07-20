@@ -72,7 +72,7 @@ const AnalysisResult = () => {
         <title>EPIC - Resultado da análise</title>
       </Head>
       <Stack m={4} spacing={2} direction="row">
-        <Button variant="contained" href="/enterprise/create">
+        <Button variant="contained" href="/enterprises">
           Voltar
         </Button>
         <Button variant="contained" onClick={createAnalysis}>
