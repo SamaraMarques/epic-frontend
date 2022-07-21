@@ -65,6 +65,9 @@ function ConfirmationQuestion() {
       <AppForm>
         <Box>
           <Box m={2}>
+            <Typography variant="h5" mb={4}>
+              {'Antes de continuar, por favor, responda essas duas perguntas:'}
+            </Typography>
             <Typography>
               {
                 '1) A empresa realiza tratamento de dados pessoais obtidos no território nacional com o objetivo de oferta ou fornecimento de bens ou serviços?'
