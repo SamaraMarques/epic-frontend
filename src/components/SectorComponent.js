@@ -1,7 +1,6 @@
 import { Box, Button, Grid } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import React from 'react';
-import DeleteIcon from '@mui/icons-material/Delete';
 
 const Div = styled('div')(({ theme }) => ({
   ...theme.typography.button,
@@ -22,11 +21,7 @@ const SectorComponent = ({ name, id }) => {
         <Grid item xs={10}>
           <Div>{name}</Div>
         </Grid>
-        <Grid item xs={2}>
-          <Button variant="contained">
-            <DeleteIcon />
-          </Button>
-        </Grid>
+        <Grid item xs={2}></Grid>
       </Grid>
     </Box>
   );
