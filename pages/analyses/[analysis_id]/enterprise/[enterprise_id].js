@@ -11,6 +11,7 @@ import { useRouter } from 'next/router';
 import api from '../../../../src/utils/axiosClient';
 import Head from 'next/head';
 import enterpriseQuestions from '../../../../src/utils/enterpriseQuestions';
+import EnterpriseQuestionWithApply from '../../../../src/components/EnterpriseQuestionWithApply';
 
 function EnterpriseQuestions() {
   const router = useRouter();
@@ -96,7 +97,7 @@ function EnterpriseQuestions() {
           {({ handleSubmit: handleSubmit2, submitting }) => (
             <Box component="form" onSubmit={handleSubmit2}>
               <Typography variant="h5">
-                {enterprise?.name.replace(/^\w/, (c) => c.toUpperCase())}
+                {'Em relação à Segurança da Informação em sua empresa:'}
               </Typography>
               <EnterpriseQuestion
                 question={enterpriseQuestions[0]}
@@ -118,7 +119,7 @@ function EnterpriseQuestions() {
                 question={enterpriseQuestions[4]}
                 id="question-five"
               />
-              <EnterpriseQuestion
+              <EnterpriseQuestionWithApply
                 question={enterpriseQuestions[5]}
                 id="question-six"
               />

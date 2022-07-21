@@ -93,8 +93,8 @@ const AnalysisResult = () => {
           c.toUpperCase(),
         )}`}</Typography>
         <Divider sx={{ borderBottomWidth: 2 }} />
-        <Typography my={3} variant="h6">
-          Respostas:
+        <Typography mt={3} mb={2} variant="h6">
+          Respostas sobre segurança da informação da empresa:
         </Typography>
         {result?.enterprise.answers.map((answer, index) => {
           return (
@@ -103,7 +103,11 @@ const AnalysisResult = () => {
                 {`${enterpriseQuestions[index]} `}
               </Typography>
               <Typography sx={{ fontWeight: 700 }}>{`${
-                answer === '1' ? 'Sim' : 'Não'
+                answer === '1'
+                  ? 'Sim'
+                  : answer === '0'
+                  ? 'Não'
+                  : 'Não se aplica'
               }`}</Typography>
             </Stack>
           );

@@ -1,5 +1,5 @@
 const sectorQuestions = [
-  '1) obtenção de dados pessoais é realizada por meio de termo de consentimento?',
+  '1) A obtenção de dados pessoais é realizada por meio de termo de consentimento?',
   '2) Em caso de obtenção de dados pessoais de menores de idade é realizada por meio de termo de consentimento dado pelos pais ou responsável legal?',
   '3) São estabelecidos acordos escritos que garantem a proteção e a segurança dos dados pessoais com todos terceirizados que processam dados pessoais em seu nome?',
   '4) O tratamento de dados pessoais sensíveis é realizado de maneira diferenciada dos demais dados pessoais?',

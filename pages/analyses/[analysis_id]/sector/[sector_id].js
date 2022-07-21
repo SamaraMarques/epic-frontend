@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Form, FormSpy } from 'react-final-form';
-import { Box } from '@mui/material';
+import { Box, Divider, Stack } from '@mui/material';
 import AppForm from '../../../../src/modules/views/AppForm';
 import FormButton from '../../../../src/modules/form/FormButton';
 import FormFeedback from '../../../../src/modules/form/FormFeedback';
@@ -90,17 +90,29 @@ function SectorQuestions() {
         <Form onSubmit={handleSubmit} subscription={{ submitting: true }}>
           {({ handleSubmit: handleSubmit2, submitting }) => (
             <Box component="form" onSubmit={handleSubmit2} noValidate>
-              <Typography variant="h5">
-                {sector?.name.replace(/^\w/, (c) => c.toUpperCase())}
-              </Typography>
-              <DegreeQuestion
-                question="Qual o grau de criticidade da informação com a qual o setor lida?"
-                id="question-gci"
-              />
+              <Stack direction="row">
+                <Typography variant="h5" mr={1}>{`Sobre o setor`}</Typography>
+                <Typography variant="h5" sx={{ fontWeight: 700 }}>
+                  {`${sector?.name.toLowerCase()}`}
+                </Typography>
+                <Typography variant="h5">:</Typography>
+              </Stack>
               <DegreeQuestion
                 question="Qual o grau de importância do setor para o negócio?"
                 id="question-gin"
+                options={['pouco importante', 'importante', 'muito importante']}
               />
+              <DegreeQuestion
+                question="Qual o grau de criticidade da informação com a qual o setor lida?"
+                id="question-gci"
+                options={[
+                  'pouca criticidade',
+                  'criticidade média',
+                  'muita criticidade',
+                ]}
+              />
+              <Divider sx={{ borderBottomWidth: 2 }} />
+
               <SectorQuestion question={sectorQuestions[0]} id="question-one" />
               <SectorQuestion question={sectorQuestions[1]} id="question-two" />
               <SectorQuestion

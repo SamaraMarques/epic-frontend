@@ -3,7 +3,7 @@ import { FormLabel, Stack, Box } from '@mui/material';
 import { Field } from 'react-final-form';
 import Typography from '../modules/components/Typography';
 
-const SectorQuestion = ({ question, id }) => {
+const EnterpriseQuestionWithApply = ({ question, id }) => {
   return (
     <Box m={2}>
       <Typography align={'justify'} mb={1}>
@@ -33,4 +33,4 @@ const SectorQuestion = ({ question, id }) => {
   );
 };
 
-export default SectorQuestion;
+export default EnterpriseQuestionWithApply;
