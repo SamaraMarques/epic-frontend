@@ -13,16 +13,17 @@ function AppAppBar({ user = null }) {
     <Box>
       <AppBar position="fixed">
         <Toolbar sx={{ justifyContent: 'space-between' }}>
-          <Box sx={{ flex: 1 }} />
-          <Link
-            variant="h5"
-            underline="none"
-            color="inherit"
-            href="/"
-            sx={{ fontSize: 24 }}
-          >
-            {'EPIC'}
-          </Link>
+          <Box sx={{ flex: 1 }}>
+            <Link
+              variant="h5"
+              underline="none"
+              color="inherit"
+              href="/"
+              sx={{ ml: 8, fontSize: 24, fontWeight: 700 }}
+            >
+              {'EPIC'}
+            </Link>
+          </Box>
           <Box
             sx={{
               flex: 1,

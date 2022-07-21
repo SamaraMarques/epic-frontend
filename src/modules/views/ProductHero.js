@@ -12,7 +12,7 @@ export default function ProductHero() {
       }}
     >
       {/* Increase the network loading priority of the background image. */}
-      <Typography color="inherit" align="center" variant="h3">
+      <Typography color="inherit" align="center" variant="h3" mt={6}>
         Análise de conformidade com a LGPD
       </Typography>
       <Typography color="inherit" align="center" variant="h4" marked="center">
@@ -47,9 +47,6 @@ export default function ProductHero() {
       >
         Faça sua análise
       </Button>
-      <Typography variant="body2" color="inherit" sx={{ mt: 2 }}>
-        Descubra agora
-      </Typography>
     </ProductHeroLayout>
   );
 }

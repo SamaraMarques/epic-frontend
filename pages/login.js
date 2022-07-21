@@ -13,6 +13,7 @@ import withRoot from '../src/modules/withRoot';
 import { useRouter } from 'next/router';
 import api from '../src/utils/axiosClient';
 import Head from 'next/head';
+import { toast, ToastContainer } from 'react-nextjs-toast';
 
 function SignIn() {
   const [sent, setSent] = React.useState(false);
@@ -46,8 +47,6 @@ function SignIn() {
   };
 
   const handleSubmit = (event) => {
-    setSent(true);
-
     api
       .post('/login', event)
       .then((response) => {
@@ -55,7 +54,13 @@ function SignIn() {
         router.push('/enterprises');
       })
       .catch((err) => {
-        console.error('Erro ' + err);
+        if (err.response.data.errors.email.length) {
+          toast.notify('Email ou senha inválida!', {
+            duration: 5,
+            type: 'error',
+            title: 'Erro!',
+          });
+        }
         localStorage.clear();
         router.push('/login');
       });
@@ -134,17 +139,10 @@ function SignIn() {
               >
                 {submitting || sent ? 'Carregando…' : 'Entrar'}
               </FormButton>
+              <ToastContainer />
             </Box>
           )}
         </Form>
-        <Typography align="center">
-          <Link
-            underline="always"
-            href="/premium-themes/onepirate/forgot-password/"
-          >
-            Esqueceu sua senha?
-          </Link>
-        </Typography>
       </AppForm>
       <AppFooter />
     </React.Fragment>
