@@ -35,7 +35,7 @@ export default function ProductHero() {
         sx={{ mb: 4, mt: 4 }}
       >
         Uma análise simples e gratuita para identificar se sua empresa está em
-        confirmadade com a LGPD.
+        conformidade com a LGPD.
       </Typography>
       <Button
         color="secondary"
