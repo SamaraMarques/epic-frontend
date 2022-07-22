@@ -5,6 +5,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import React, { useState } from 'react';
 import api from '../utils/axiosClient';
+import { useRouter } from 'next/router';
 
 const Div = styled('div')(({ theme }) => ({
   ...theme.typography.button,
@@ -12,20 +13,12 @@ const Div = styled('div')(({ theme }) => ({
   padding: theme.spacing(1),
 }));
 
-const AnalysisComponent = ({ id, enterprise_id, created_at }) => {
-  const [token, setToken] = useState('');
-
-  if (typeof window !== 'undefined') {
-    if (!token) {
-      setToken(window.localStorage.getItem('token'));
-    }
-  }
-
+const AnalysisComponent = ({ id, enterprise_id, created_at, token }) => {
+  const router = useRouter();
   const formattedDate = new Date(created_at).toLocaleString('pt-BR', {
     dateStyle: 'short',
     timeStyle: 'short',
   });
-
   const deleteAnalysis = () => {
     api
       .delete(`/analyses/${id}`, {
@@ -34,8 +27,8 @@ const AnalysisComponent = ({ id, enterprise_id, created_at }) => {
       .then()
       .catch((err) => {
         console.log(err);
-        //router.push('/enterprises');
       });
+    router.push(`/enterprise/${enterprise_id}/analyses`);
   };
 
   return (
@@ -59,11 +52,7 @@ const AnalysisComponent = ({ id, enterprise_id, created_at }) => {
           </Button>
         </Grid>
         <Grid item xs={2}>
-          <Button
-            variant="contained"
-            href={`/enterprise/${enterprise_id}/analyses`}
-            onClick={deleteAnalysis}
-          >
+          <Button variant="contained" onClick={deleteAnalysis}>
             <DeleteIcon />
           </Button>
         </Grid>

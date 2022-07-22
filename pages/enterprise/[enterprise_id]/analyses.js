@@ -3,6 +3,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import AnalysisComponent from '../../../src/components/AnalysisComponent';
+import Typography from '../../../src/modules/components/Typography';
 import AppAppBar from '../../../src/modules/views/AppAppBar';
 import withRoot from '../../../src/modules/withRoot';
 import api from '../../../src/utils/axiosClient';
@@ -63,16 +64,24 @@ const Analyses = () => {
         </Button>
       </Stack>
       <Stack m={3} direction="column">
-        {analyses.map((analisys, index) => {
-          return (
-            <AnalysisComponent
-              key={index}
-              id={analisys?.id}
-              enterprise_id={analisys?.enterprise_id}
-              created_at={analisys?.created_at}
-            />
-          );
-        })}
+        {analyses.length ? (
+          analyses.map((analisys, index) => {
+            return (
+              <AnalysisComponent
+                key={index}
+                id={analisys?.id}
+                enterprise_id={analisys?.enterprise_id}
+                created_at={analisys?.created_at}
+                token={token}
+              />
+            );
+          })
+        ) : (
+          <Typography ml={4} mt={4}>
+            Você não possui nenhuma análise, clique em nova análise para
+            começar.
+          </Typography>
+        )}
       </Stack>
     </Box>
   );

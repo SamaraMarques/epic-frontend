@@ -64,9 +64,15 @@ const Enterprise = () => {
       </Stack>
       <Stack m={3} direction="column">
         {sectors.length ? (
-          sectors.map((enterprise, index) => {
+          sectors.map((sector, index) => {
             return (
-              <SectorComponent key={index} name={enterprise?.name} id={index} />
+              <SectorComponent
+                key={index}
+                name={sector?.name}
+                id={sector?.id}
+                enterprise_id={enterprise_id}
+                token={token}
+              />
             );
           })
         ) : (
