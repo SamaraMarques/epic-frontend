@@ -37,7 +37,7 @@ const Enterprise = () => {
         console.log(err);
         router.push('/enterprises');
       });
-  }, [token, router, enterprise_id, user, setUser]);
+  }, [token, router, enterprise_id, user, setUser, setSectors]);
 
   return (
     <Box>

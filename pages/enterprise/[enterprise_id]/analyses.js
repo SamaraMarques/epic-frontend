@@ -2,6 +2,7 @@ import { Box, Button, Stack } from '@mui/material';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
+import { toast, ToastContainer } from 'react-nextjs-toast';
 import AnalysisComponent from '../../../src/components/AnalysisComponent';
 import Typography from '../../../src/modules/components/Typography';
 import AppAppBar from '../../../src/modules/views/AppAppBar';
@@ -40,6 +41,31 @@ const Analyses = () => {
       });
   }, [token, router, enterprise_id, user, setUser]);
 
+  const checkSectors = () => {
+    api
+      .get(`/enterprises/${enterprise_id}/sectors`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        if (response.data.length) {
+          router.push(`/analyses/confirmation/${enterprise_id}`);
+        } else {
+          toast.notify(
+            'Cadastre setores na empresa para poder realizar análises!',
+            {
+              duration: 5,
+              type: 'warn',
+              title: 'Erro!',
+            },
+          );
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        router.push(`/enterprises`);
+      });
+  };
+
   return (
     <Box>
       <Head>
@@ -50,10 +76,7 @@ const Analyses = () => {
         <Button variant="contained" href={`/enterprises`}>
           Minhas empresas
         </Button>
-        <Button
-          variant="contained"
-          href={`/analyses/confirmation/${enterprise_id}`}
-        >
+        <Button variant="contained" onClick={checkSectors}>
           Nova análise
         </Button>
         <Button
@@ -62,6 +85,7 @@ const Analyses = () => {
         >
           Setores
         </Button>
+        <ToastContainer />
       </Stack>
       <Stack m={3} direction="column">
         {analyses.length ? (
