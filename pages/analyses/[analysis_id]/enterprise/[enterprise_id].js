@@ -97,7 +97,7 @@ function EnterpriseQuestions() {
           {({ handleSubmit: handleSubmit2, submitting }) => (
             <Box component="form" onSubmit={handleSubmit2}>
               <Typography variant="h5">
-                {'Em relação à Segurança da Informação em sua empresa:'}
+                {'Em relação à Segurança da Informação, sua empresa:'}
               </Typography>
               <EnterpriseQuestion
                 question={enterpriseQuestions[0]}
