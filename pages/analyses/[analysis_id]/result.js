@@ -9,6 +9,8 @@ import api from '../../../src/utils/axiosClient';
 import { useReactToPrint } from 'react-to-print';
 import enterpriseQuestions from '../../../src/utils/enterpriseQuestions';
 import SectorsResultTable from '../../../src/components/SectorsResultTable';
+import SectorsResultDescription from '../../../src/components/SectorsResultDescription';
+import CriticalSectorDescription from '../../../src/components/CriticalSectorDescription';
 
 const AnalysisResult = () => {
   const router = useRouter();
@@ -66,6 +68,15 @@ const AnalysisResult = () => {
     timeStyle: 'short',
   });
 
+  const criticalSectorIndex = result?.sectors.reduce(
+    (previous, current, index, sectors) => {
+      return current.finalNCIndex > sectors[previous].finalNCIndex
+        ? index
+        : previous;
+    },
+    0,
+  );
+
   return (
     <Box>
       <Head>
@@ -119,11 +130,20 @@ const AnalysisResult = () => {
         <Typography mb={3} variant="h6">
           {`Classificação: ${defineClassificacao(result?.enterprise.index)}`}
         </Typography>
-        <Divider sx={{ borderBottomWidth: 2 }} />
+        <Divider sx={{ borderBottomWidth: 2, pageBreakAfter: 'always' }} />
         <Typography variant="h6" mt={3} mb={2}>
           {'Índice de não conformidade com a LGPD:'}
         </Typography>
         <SectorsResultTable sectors={result?.sectors} />
+        <Divider sx={{ borderBottomWidth: 2 }} />
+
+        {result?.sectors[criticalSectorIndex] && (
+          <CriticalSectorDescription
+            sector={result?.sectors[criticalSectorIndex]}
+          />
+        )}
+        <Divider sx={{ borderBottomWidth: 2 }} />
+
         <Typography mt={6} ml={2}>
           {`Data/Horário: ${formattedDate}`}
         </Typography>
